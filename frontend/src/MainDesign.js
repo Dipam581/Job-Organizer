@@ -22,6 +22,7 @@ function MainDesign(props) {
     const [selectedWord, setSelectedWord] = useState('');
     const [borderClass, setBorderClass] = useState('');
     const [allJobs, setAllJobs] = useState([]);
+    const [filteredJobs, setFilteredJobs] = useState([]);
 
     
     if(props.jobs && props.jobs.length >0){
@@ -47,6 +48,7 @@ function MainDesign(props) {
     function searchJob(e){
         console.log("clicked in search");
         fiteredJobs = fetchJobs.filter(job => job.Location.toLowerCase().includes(selectedLocation.toLowerCase()) && job.Company.toLowerCase().includes(selectedCompany.toLowerCase()) && job.Title.toLowerCase().includes(selectedWord.toLowerCase()));
+        setFilteredJobs(fiteredJobs);
     }
 
 
@@ -388,7 +390,8 @@ function MainDesign(props) {
 
 
                     {/* From this */}
-                    <JobListings listedJobs={fiteredJobs.length > 0 ? fiteredJobs : fetchJobs} />
+                    <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                    {/* listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} */}
 
                     {/* Between this */}
                 </div>

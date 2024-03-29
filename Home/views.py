@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import requests
 from bs4 import BeautifulSoup
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -128,9 +129,19 @@ def Home(request):
 
 
     print(locationSet)
-    return render(request, 'index.html', {
-        'jobs' : sorted_data,
-        'remoteJob' : sorted_remote_job,
-        'locationSet' : locationSet,
-        'companySet' : companySet
-        })
+    # return render(request, 'index.html', {
+    #     'jobs' : sorted_data,
+    #     'remoteJob' : sorted_remote_job,
+    #     'locationSet' : locationSet,
+    #     'companySet' : companySet
+    #     })
+
+    data = {
+        'jobs': sorted_data,
+        'remoteJob': sorted_remote_job,
+        'locationSet': locationSet,
+        'companySet': companySet
+    }
+
+    # Returning JSON response
+    return JsonResponse(data)
