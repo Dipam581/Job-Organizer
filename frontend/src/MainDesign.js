@@ -1,6 +1,8 @@
 import React from 'react'
 import BounceLoader from "react-spinners/BounceLoader"
+import PulseLoader from "react-spinners/PulseLoader";
 import JobListings from './JobListings';
+import About from './About';
 import { useState, useEffect } from 'react';
 import {
     Navbar,
@@ -23,11 +25,12 @@ function MainDesign(props) {
     const [borderClass, setBorderClass] = useState('');
     const [allJobs, setAllJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]);
+    const [loading, setLoading] = React.useState(false);
 
-    
-    if(props.jobs && props.jobs.length >0){
+
+    if (props.jobs && props.jobs.length > 0) {
         fetchJobs = props.jobs;
-    } 
+    }
 
     useEffect(() => {
         if (props.jobs.length > 0 && props.company.length > 0 && props.locationSet.length > 0) {
@@ -39,17 +42,32 @@ function MainDesign(props) {
 
 
     const handleCompanyChange = param => (event) => {
-        if(param == "company")  setSelectedCompany(event.target.value);
-        else if(param == "location")  setSelectedLocation(event.target.value);
-        else  setSelectedWord(event.target.value);
-        
+        if (param == "company") setSelectedCompany(event.target.value);
+        else if (param == "location") setSelectedLocation(event.target.value);
+        else setSelectedWord(event.target.value);
+
     };
 
-    function searchJob(e){
+    function searchJob(e) {
         console.log("clicked in search");
-        fiteredJobs = fetchJobs.filter(job => job.Location.toLowerCase().includes(selectedLocation.toLowerCase()) && job.Company.toLowerCase().includes(selectedCompany.toLowerCase()) && job.Title.toLowerCase().includes(selectedWord.toLowerCase()));
+        const fiteredJobs = filterJobs(fetchJobs, selectedCompany, selectedLocation, selectedWord);
         setFilteredJobs(fiteredJobs);
+        const scrollDiv = document.getElementById('jobDiv');
+        if (scrollDiv) {
+            scrollDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+
     }
+    const filterJobs = (jobs, selectedCompany, selectedLocation, selectedWord) => {
+        return jobs.filter(job => {
+            const companyMatch = !selectedCompany || job.Company.toLowerCase().includes(selectedCompany.toLowerCase());
+            const locationMatch = !selectedLocation || job.Location.toLowerCase().includes(selectedLocation.toLowerCase());
+            const wordMatch = !selectedWord || job.Title.toLowerCase().includes(selectedWord.toLowerCase());
+            return companyMatch && locationMatch && wordMatch;
+        });
+    };
+
 
 
     function navigateDiv(e) {
@@ -290,48 +308,17 @@ function MainDesign(props) {
                                         </select>
                                     </div>
                                     <div className="p-6">
-                                        <input id="word" type="text" className="form-control border-2 border-green-500 w-full text-center h-9" placeholder="Keyword" value={selectedWord} onChange={handleCompanyChange}/>
+                                        <input id="word" type="text" className="form-control border-2 border-green-500 w-full text-center h-9" placeholder="Keyword" value={selectedWord} onChange={handleCompanyChange("word")} />
                                     </div>
-
                                     <div className="p-6">
-                                        <h1 className="text-green-300 underline text-xl font-bold ml-12 cursor-pointer" style={{ "width": "55%", "height": "100%"}} onClick={searchJob}>Search</h1>
+                                        <h1 className="text-green-300 underline text-xl font-bold ml-12 cursor-pointer" style={{ "width": "55%", "height": "100%" }} onClick={searchJob}>Search</h1>
                                     </div>
-
                                 </div>
-
                             </div>
-
-                            {/* <div className="p-0 active mb-6 grid grid-cols-4 gap-4 bg-red-200">
-                                <div className="p-6">
-                                    <input type="text" className="form-control border w-full text-center h-9" placeholder="Keyword" />
-                                </div>
-                                
-                                <div className="p-6">
-                                    <select className="border-0 w-full text-left h-9">
-                                        <option className='text-center' value="" disabled selected>Company</option>
-                                        {compfilter && compfilter.length > 0 && compfilter.map((company, index) => (
-                                            <option key={index} value={company}>{company}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="p-6">
-                                    <select className="border-0 w-full text-left h-9">
-                                        <option className='text-center' value="" disabled selected>Location</option>
-                                        {locfilter && locfilter.length > 0 && locfilter.map((location, index) => (
-                                            <option key={index} value={location}>{location}</option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="p-6">
-                                    <button className="border-0 bg-green-500 text-white text-xl font-bold" style={{ "width": "55%", "height": "100%", "marginLeft": "-44%" }}>Search</button>
-                                </div>
-                            </div> */}
-
                         </div>
                     </div>
 
+                    <About/>
 
                     <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1 mb-6" id="navbar-sticky">
                         <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
@@ -344,7 +331,6 @@ function MainDesign(props) {
                             <li>
                                 <a href="#tab-3" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Current Openings</a>
                             </li>
-
                         </ul>
                     </div>
 
@@ -387,10 +373,11 @@ function MainDesign(props) {
                             />
                         </div>
                     </div>
-
-
                     {/* From this */}
-                    <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                    <div id="jobDiv" className=''>
+                        <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                    </div>
+
                     {/* listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} */}
 
                     {/* Between this */}
