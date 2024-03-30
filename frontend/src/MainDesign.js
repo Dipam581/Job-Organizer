@@ -318,7 +318,21 @@ function MainDesign(props) {
                         </div>
                     </div>
 
-                    <About/>
+                    <About />
+
+
+                    <div className='mt-32 mb-4'>
+                        <hl className="text-white text-lg p-2 border-2 rounded-sm bg-orange-500">Latest Job Post</hl>
+                        <br />
+                        <p className="mt-6 text-black text-3xl">Jobs You May Be Interested</p>
+                        <br />
+                        <p className=' font-sans mb-6'>Explore a world of opportunities with jobs tailored to your interests. 
+                        Discover roles that align with your skills and aspirations, opening doors to new challenges and growth. 
+                        From innovative startups to industry leaders, find your next career move among a curated selection of positions. 
+                        Your next adventure awaits – dive in and unlock your potential today.
+                        </p>
+                    </div>
+
 
                     <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1 mb-6" id="navbar-sticky">
                         <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
