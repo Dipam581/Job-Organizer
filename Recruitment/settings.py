@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "Login",
     "Home",
     "JobData",
+
+    'rest_framework',
     'corsheaders',
 ]
 
@@ -143,6 +145,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ACCOUNT_SID='AC892e84edde6d4f5f2404b76f28909b33'
 AUTH_TOKEN='8b8328e510cacdaf64a2f286e3d039fa'
-# COUNTRY_CODE='+91'
-# TWILIO_WHATSAPP_NUMBER='whatsapp:+14155238886'
-# TWILIO_PHONE_NUMBER='9477416565'
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

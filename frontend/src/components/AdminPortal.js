@@ -1,11 +1,12 @@
 import React from 'react';
 import axios from "axios";
-
+import Axios from './Axios';
 
 function AdminPortal() {
-  let jobProfile = [];
+  var jobProfile = [];
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     let obj = {
       "company": e.target[0].value,
       "designation": e.target[1].value,
@@ -16,19 +17,48 @@ function AdminPortal() {
       "mail": e.target[6].value,
     }
     jobProfile.push(obj)
+    addData()
 
-    const response = await axios.post("http://127.0.0.1:8000/jobdata/", jobProfile);
 
-    if (response.status === 200) {
-      console.log("success");
-    } else {
-      console.log("Failed");
-    }
 
+
+
+    // const response = await axios.post("http://127.0.0.1:8000/jobdata/", jobProfile);
+    // const response = await axios.post("http://127.0.0.1:8000/jobdata/", obj, {
+    //   withCredentials: true, // Include credentials
+    // });
+
+    // if (response.status === 200) {
+    //   console.log("success");
+    // } else {
+    //   console.log("Failed");
+    // }
+
+  }
+
+  const addData = async () => {
+    let formField = new FormData()
+
+    formField.append("company", jobProfile[0].company)
+    formField.append("designation", jobProfile[0].designation)
+    formField.append("description", jobProfile[0].description)
+    formField.append("skill", jobProfile[0].skill)
+    formField.append("yoe", jobProfile[0].yoe)
+    formField.append("salary", jobProfile[0].salary)
+    formField.append("mail", jobProfile[0].mail)
+
+    await axios({
+      method: 'post',
+      url: 'http://127.0.0.1:8000/jobdata/',
+      data: formField
+    }).then((response) => {
+      console.log(response.data)
+    })
   }
   return (
     <>
       <form method='POST' onSubmit={handleSubmit} className="p-4 border-2 rounded-lg shadow-xl container m-auto mt-6 bg-gray-100">
+
         <p className='font-medium text-4xl'>Welcome to JobFinder!</p>
         <p className='mt-4 justify-center'>Empower recruiters with a seamless admin portal, offering intuitive tools to effortlessly post job opportunities.
           Streamline the process, from drafting job descriptions to reaching qualified candidates, and elevate recruitment efficiency.
