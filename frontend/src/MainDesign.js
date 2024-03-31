@@ -3,6 +3,7 @@ import BounceLoader from "react-spinners/BounceLoader"
 import PulseLoader from "react-spinners/PulseLoader";
 import JobListings from './JobListings';
 import About from './About';
+import DarkModeToggle from './components/DarkModeToggle';
 import { useState, useEffect } from 'react';
 import {
     Navbar,
@@ -212,6 +213,7 @@ function MainDesign(props) {
                         >
                             <span>Upload Resume</span>
                         </Button>
+                        <DarkModeToggle/>
                     </div>
                     <IconButton
                         variant="text"
