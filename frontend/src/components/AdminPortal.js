@@ -1,8 +1,10 @@
 import React from 'react';
+import axios from "axios";
+
 
 function AdminPortal() {
   let jobProfile = [];
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let obj = {
       "company": e.target[0].value,
@@ -14,6 +16,14 @@ function AdminPortal() {
       "mail": e.target[6].value,
     }
     jobProfile.push(obj)
+
+    const response = await axios.post("http://127.0.0.1:8000/jobdata/", jobProfile);
+
+    if (response.status === 200) {
+      console.log("success");
+    } else {
+      console.log("Failed");
+    }
 
   }
   return (
