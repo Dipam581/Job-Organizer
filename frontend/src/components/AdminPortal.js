@@ -18,17 +18,28 @@ function AdminPortal() {
       "designation": e.target[1].value,
       "description": e.target[2].value,
       "skill": e.target[3].value,
-      "yoe": e.target[4].value,
-      "salary": e.target[5].value,
-      "mail": e.target[6].value,
+      "link": e.target[4].value,
+      "yoe": e.target[5].value,
+      "salary": e.target[6].value,
+      "mail": e.target[7].value,
     }
     jobProfile.push(obj)
     //addData()
-    const jsonString = JSON.stringify(obj);
-    const storageRef = ref(data, 'jobProfile.json');
-    await uploadBytes(storageRef, new Blob([jsonString]));
+    // const jsonString = JSON.stringify(obj);
+    // const storageRef = ref(data, 'jobProfile.json');
+    // await uploadBytes(storageRef, new Blob([jsonString]));
 
-    console.log("Job profile uploaded to Firebase Storage");
+    // console.log("Job profile uploaded to Firebase Storage");
+    const response = await fetch('http://localhost:8080/fetchData', {
+      method: "POST",
+      body: JSON.stringify(obj),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json();
+
+    console.log(data)
 
 
 
@@ -48,18 +59,12 @@ function AdminPortal() {
   }
   const [info, setInfo] = useState([]);
   const fetchData = async () => {
-    try {
-      const querySnapshot = await db.collection("data").get();
-
-      const fetchedData = [];
-      querySnapshot.forEach((doc) => {
-        fetchedData.push(doc.data());
-      });
-
-      setInfo(fetchedData);
-    } catch (error) {
-      console.error("Error fetching data from Firestore:", error);
-    }
+    console.log("data fetch started...")
+    const response = await fetch('http://localhost:8080/fetchData', {
+      method: "GET",
+    })
+    const data = await response.json();
+    console.log("called db data", data)
   };
 
   const addData = async () => {
@@ -69,6 +74,7 @@ function AdminPortal() {
     formField.append("designation", jobProfile[0].designation)
     formField.append("description", jobProfile[0].description)
     formField.append("skill", jobProfile[0].skill)
+    formField.append("link", jobProfile[0].link)
     formField.append("yoe", jobProfile[0].yoe)
     formField.append("salary", jobProfile[0].salary)
     formField.append("mail", jobProfile[0].mail)
@@ -121,6 +127,13 @@ function AdminPortal() {
           </div>
           <div>
             <textarea type="text" id="skill" className="resize-y bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Python, Java, ML, AWS" required></textarea>
+          </div>
+
+          <div>
+            <label for="link" className="block mb-2 text-lg font-medium font-serif text-gray-900 dark:text-white">Apply Link</label>
+          </div>
+          <div>
+            <input type="text" id="link" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="www.google.com" required />
           </div>
 
           <div>
