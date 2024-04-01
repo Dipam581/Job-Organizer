@@ -147,15 +147,18 @@ def Home(request):
                 if (comp not in companySet):
                     companySet.append(comp)
 
+
+    # print(locationSet)
     # return render(request, 'index.html', {
     #     'jobs' : sorted_data,
     #     'remoteJob' : sorted_remote_job,
     #     'locationSet' : locationSet,
     #     'companySet' : companySet
     #     })
-    print("Before Pruning--",len(sorted_data))
     sorted_data = checkDuplicates(sorted_data)
-    print("After pruning--",len(sorted_data))
+    
+    
+
 
     data = {
         'jobs': sorted_data,

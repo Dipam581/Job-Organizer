@@ -1,6 +1,12 @@
-import React from 'react';
+import { React, useState } from 'react';
 import axios from "axios";
 import Axios from './Axios';
+import { data } from '../reactDataConfig';
+import { db } from '../reactDataConfig';
+import FetcheFirebase from './FetcheFirebase';
+
+import { ref, uploadBytes } from 'firebase/storage';
+import { collection, getDocs } from 'firebase/firestore';
 
 function AdminPortal() {
   var jobProfile = [];
@@ -17,7 +23,12 @@ function AdminPortal() {
       "mail": e.target[6].value,
     }
     jobProfile.push(obj)
-    addData()
+    //addData()
+    const jsonString = JSON.stringify(obj);
+    const storageRef = ref(data, 'jobProfile.json');
+    await uploadBytes(storageRef, new Blob([jsonString]));
+
+    console.log("Job profile uploaded to Firebase Storage");
 
 
 
@@ -35,6 +46,21 @@ function AdminPortal() {
     // }
 
   }
+  const [info, setInfo] = useState([]);
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await db.collection("data").get();
+
+      const fetchedData = [];
+      querySnapshot.forEach((doc) => {
+        fetchedData.push(doc.data());
+      });
+
+      setInfo(fetchedData);
+    } catch (error) {
+      console.error("Error fetching data from Firestore:", error);
+    }
+  };
 
   const addData = async () => {
     let formField = new FormData()
@@ -133,6 +159,10 @@ function AdminPortal() {
             <div className="md:w-2/3">
               <button className="shadow bg-purple-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">
                 Post
+              </button>
+
+              <button className="shadow bg-purple-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button" onClick={fetchData}>
+                Fetch
               </button>
             </div>
           </div>

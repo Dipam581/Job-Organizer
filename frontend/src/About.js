@@ -1,5 +1,5 @@
 import React from 'react';
-import { SiBmcsoftware } from "react-icons/si";
+//import { SiBmcsoftware } from "react-icons/si";
 import Section from './Section';
 
 function About() {

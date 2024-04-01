@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,9 +60,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
+#CORS_ORIGIN_WHITELIST = [
+#    'http://localhost:3000',
+#]
 
 
 ROOT_URLCONF = 'Recruitment.urls'
@@ -146,6 +147,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_SID='AC892e84edde6d4f5f2404b76f28909b33'
 AUTH_TOKEN='8b8328e510cacdaf64a2f286e3d039fa'
 
+MEDIA_ROOT = BASE_DIR /"media"
+MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

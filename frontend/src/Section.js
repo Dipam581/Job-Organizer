@@ -1,5 +1,5 @@
 import React from 'react';
-import { SiBmcsoftware, SiPython, SiReact ,GrVirtualMachine, SiAltiumdesigner } from "react-icons/si";
+import { SiBmcsoftware, SiPython, SiReact , SiAltiumdesigner } from "react-icons/si";
 import { DiJava } from "react-icons/di";
 import { GiSewingMachine } from "react-icons/gi";
 
