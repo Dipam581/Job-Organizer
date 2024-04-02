@@ -51,39 +51,44 @@ function PostedJobs(props) {
                 <a className="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
             </div>
 
-
-            <div id="" className="grid grid-cols-4 gap-4 mb-8 p-10 border-2">
-                <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
-                    <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
-                </div>
+            <div className="grid grid-cols-4 gap-4 mb-8">
                 <div className="col-span-1 border-0">
-                    <div className='text-2xl font-medium mr-16 mt-6 font-serif'>Software Engineer </div>
-                    <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>Company - USA </div>
+filter
+                </div>
+                <div className="col-span-3 border-0">
+                    <div className="grid grid-cols-4 gap-4 mb-8 border-2">
+                        <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
+                            <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
+                        </div>
+                        <div className="col-span-2 border-0">
+                            <div className='text-2xl font-medium mr-16 mt-6 font-serif'>Software Engineer </div>
+                            <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>Company - USA </div>
 
-                    <div className='mr-16 mt-4'>
-                        <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>Full Time</span>
-                        <span> | </span>
-                        <span className='text-sm font-medium font-serif text-green-500 border border-green-200 rounded-xl p-1'>Python</span>
-                        <span>   </span>
-                        <span className='text-sm font-medium font-serif text-blue-500 border border-blue-200 rounded-xl p-1'>AWS</span>
-                        <span>   </span>
-                        <span className='text-sm font-medium font-serif text-yellow-500 border rounded-xl p-1 border-yellow-600'>Docker</span>
-                        <span>   </span>
+                            <div className='mr-16 mt-4'>
+                                <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>Full Time</span>
+                                <span> | </span>
+                                <span className='text-sm font-medium font-serif text-green-500 border border-green-200 rounded-xl p-1'>Python</span>
+                                <span>   </span>
+                                <span className='text-sm font-medium font-serif text-blue-500 border border-blue-200 rounded-xl p-1'>AWS</span>
+                                <span>   </span>
+                                <span className='text-sm font-medium font-serif text-yellow-500 border rounded-xl p-1 border-yellow-600'>Docker</span>
+                                <span>   </span>
+                            </div>
+                        </div>
+
+                        <div className="col-span-1 border-0 flex flex-col items-center">
+                            <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
+                            <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '180px' }}>
+                                <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '69%' }}>69%</div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
-
-                <div className="col-span-1 border-0">
-
-                </div>
-                <div className="col-span-1 border-0 flex flex-col items-center">
-                    <button type="submit" className='cursor-pointer border-2 p-2 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
-                    <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '180px' }}>
-                        <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '90%' }}>90%</div>
-                    </div>
-                </div>
-
-
             </div>
+
+
 
         </>
     )
