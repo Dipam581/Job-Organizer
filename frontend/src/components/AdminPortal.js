@@ -1,12 +1,12 @@
 import { React, useState } from 'react';
 import axios from "axios";
-import Axios from './Axios';
-import { data } from '../reactDataConfig';
-import { db } from '../reactDataConfig';
-import FetcheFirebase from './FetcheFirebase';
+// import Axios from './Axios';
+// import { data } from '../reactDataConfig';
+// import { db } from '../reactDataConfig';
+// import FetcheFirebase from './FetcheFirebase';
 
-import { ref, uploadBytes } from 'firebase/storage';
-import { collection, getDocs } from 'firebase/firestore';
+// import { ref, uploadBytes } from 'firebase/storage';
+// import { collection, getDocs } from 'firebase/firestore';
 
 function AdminPortal() {
   var jobProfile = [];
@@ -28,8 +28,9 @@ function AdminPortal() {
     // const jsonString = JSON.stringify(obj);
     // const storageRef = ref(data, 'jobProfile.json');
     // await uploadBytes(storageRef, new Blob([jsonString]));
-
     // console.log("Job profile uploaded to Firebase Storage");
+
+
     const response = await fetch('http://localhost:8080/fetchData', {
       method: "POST",
       body: JSON.stringify(obj),
@@ -40,23 +41,9 @@ function AdminPortal() {
     const data = await response.json();
 
     console.log(data)
-
-
-
-
-
-    // const response = await axios.post("http://127.0.0.1:8000/jobdata/", jobProfile);
-    // const response = await axios.post("http://127.0.0.1:8000/jobdata/", obj, {
-    //   withCredentials: true, // Include credentials
-    // });
-
-    // if (response.status === 200) {
-    //   console.log("success");
-    // } else {
-    //   console.log("Failed");
-    // }
-
   }
+
+
   const [info, setInfo] = useState([]);
   const fetchData = async () => {
     console.log("data fetch started...")
