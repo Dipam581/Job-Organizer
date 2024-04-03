@@ -1,41 +1,60 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { GrPowerReset } from "react-icons/gr";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function PostedJobs(props) {
     const [data, setData] = useState([]);
-    console.log("posted jobs", props.postedJob)
+    console.log("posted jobs", props.postedJob);
+
+
 
     //Tooltip
     const tooltip = (
-        <Tooltip id="tooltip" style={{"font-size" : "0.8rem"}}>
+        <Tooltip id="tooltip" style={{ "font-size": "0.8rem" }}>
             Reset Filter
         </Tooltip>
     );
 
     const fetchData = async () => {
         console.log("data fetch started...")
-        // const response = await fetch('http://localhost:8080/fetchData', {
-        //     method: "GET",
-        // })
-        // const data = await response.json();
-        // console.log("called db data", data)
-        // var postedJob = [];
+        const response = await fetch('http://localhost:8080/fetchData', {
+            method: "GET",
+        })
+        const data = await response.json();
+        console.log("called db data", data)
+        var postedJob = [];
 
-        // for(let key in data){
-        //     let obj = {
-        //         "company" : data[key].company,
-        //         "designation" : data[key].designation,
-        //         "description" : data[key].description,
-        //         "skill" : data[key].skill,
-        //         "link" : data[key].link,
-        //         "yoe" : data[key].yoe,
-        //         "salary" : data[key].salary,
-        //         "mail" : data[key].mail,
-        //     }
-        //     postedJob.push(obj)
-        // }
+        for (let key in data) {
+            let obj = {
+                "company": data[key].company,
+                "designation": data[key].designation,
+                "description": data[key].description,
+                "skill": data[key].skill,
+                "link": data[key].link,
+                "yoe": data[key].yoe,
+                "salary": data[key].salary,
+                "mail": data[key].mail,
+            }
+            postedJob.push(obj)
+        }
+        setData(postedJob);
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
+    const getColor = (skill) => {
+        const colorMap = {
+            "java": "#007396",
+            "python": "#3776AB",
+            "c++": "#649AD2",
+            "html": "#E34F26",
+            "css": "#1572B6",
+            "javascript": "#F7DF1E",
+            "typeScript": "#3178C6",
+            "restful apis": "#6DB33F"
+        };
+        return colorMap[skill.toLowerCase()] || "#000000"; // Default to black if color not found
     };
     return (
         <>
@@ -129,34 +148,40 @@ function PostedJobs(props) {
                     {/* Filter button end */}
                 </div>
                 <div className="col-span-3 border-0">
-                    <div className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg">
-                        <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
-                            <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
-                        </div>
-                        <div className="col-span-2 border-0">
-                            <div className='text-2xl font-medium mr-16 mt-6 font-serif'>Software Engineer </div>
-                            <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>Company - USA </div>
+                    {data && data.map((job, index) => (
+                        <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg">
+                            <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
+                                <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
+                            </div>
+                            <div className="col-span-2 border-0">
+                                <div className='text-2xl font-medium mr-16 mt-6 font-serif'>{job.desg} </div>
+                                <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>{job.company} </div>
+                                <div className='mr-16 mt-4'>
+                                    <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>Full Time</span>
+                                    <span> | </span>
 
-                            <div className='mr-16 mt-4'>
-                                <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>Full Time</span>
-                                <span> | </span>
-                                <span className='text-sm font-medium font-serif text-green-500 border border-green-200 rounded-xl p-1'>Python</span>
-                                <span>   </span>
-                                <span className='text-sm font-medium font-serif text-blue-500 border border-blue-200 rounded-xl p-1'>AWS</span>
-                                <span>   </span>
-                                <span className='text-sm font-medium font-serif text-yellow-500 border rounded-xl p-1 border-yellow-600'>Docker</span>
-                                <span>   </span>
+                                    {job.skill && job.skill.split(",").map((skill, index) => (
+                                        <span key={index} className='text-sm font-medium font-serif border border-green-200 rounded-xl p-1' style={{ "color": getColor(skill),"border-color" : getColor(skill) }}>
+                                            {skill}
+                                        </span>
+                                    ))}
+
+                                    {/* <span className='text-sm font-medium font-serif text-blue-500 border border-blue-200 rounded-xl p-1'>AWS</span>
+                                    <span>   </span>
+                                    <span className='text-sm font-medium font-serif text-yellow-500 border rounded-xl p-1 border-yellow-600'>Docker</span>
+                                    <span>   </span> */}
+                                </div>
+                            </div>
+                            <div className="col-span-1 border-0 flex flex-col items-center">
+                                <a href={job.link} target='blank'>
+                                    <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
+                                </a>
+                                <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '180px' }}>
+                                    <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '69%' }}>69%</div>
+                                </div>
                             </div>
                         </div>
-
-                        <div className="col-span-1 border-0 flex flex-col items-center">
-                            <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
-                            <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '180px' }}>
-                                <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '69%' }}>69%</div>
-                            </div>
-                        </div>
-
-                    </div>
+                    ))}
                 </div>
             </div>
 
