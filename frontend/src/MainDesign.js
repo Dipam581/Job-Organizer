@@ -4,6 +4,9 @@ import PulseLoader from "react-spinners/PulseLoader";
 import JobListings from './JobListings';
 import About from './About';
 import DarkModeToggle from './components/DarkModeToggle';
+import Tab1 from './components/Tab Menu/Tab1';
+import Tab2 from './components/Tab Menu/Tab2';
+import Tab3 from './components/Tab Menu/Tab2';
 import { useState, useEffect } from 'react';
 import {
     Navbar,
@@ -27,6 +30,15 @@ function MainDesign(props) {
     const [allJobs, setAllJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [loading, setLoading] = React.useState(false);
+
+    const [tab, setTab] = useState("");
+    const [visible, setVisible] = useState(false);
+
+    function tabChange(e) {
+        console.log("tab clicked");
+        let id = e?.currentTarget?.id || "";
+        setTab(id);
+    }
 
 
     if (props.jobs && props.jobs.length > 0) {
@@ -213,7 +225,7 @@ function MainDesign(props) {
                         >
                             <span>Upload Resume</span>
                         </Button>
-                        <DarkModeToggle/>
+                        <DarkModeToggle />
                     </div>
                     <IconButton
                         variant="text"
@@ -328,10 +340,10 @@ function MainDesign(props) {
                         <br />
                         <p className="mt-6 text-black text-3xl">Jobs You May Be Interested</p>
                         <br />
-                        <p className=' font-sans mb-6'>Explore a world of opportunities with jobs tailored to your interests. 
-                        Discover roles that align with your skills and aspirations, opening doors to new challenges and growth. 
-                        From innovative startups to industry leaders, find your next career move among a curated selection of positions. 
-                        Your next adventure awaits – dive in and unlock your potential today.
+                        <p className=' font-sans mb-6'>Explore a world of opportunities with jobs tailored to your interests.
+                            Discover roles that align with your skills and aspirations, opening doors to new challenges and growth.
+                            From innovative startups to industry leaders, find your next career move among a curated selection of positions.
+                            Your next adventure awaits – dive in and unlock your potential today.
                         </p>
                     </div>
 
@@ -339,13 +351,13 @@ function MainDesign(props) {
                     <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1 mb-6" id="navbar-sticky">
                         <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li>
-                                <a href="#tab-1" className="block py-2 px-3 text-xl border-b-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Feature Job</a>
+                                <a id="tab-1" href="#toptab-1" className="block py-2 px-3 text-xl border-b-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page" onClick={tabChange}>Posted Jobs</a>
                             </li>
                             <li>
-                                <a href="#tab-2" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Remote Job</a>
+                                <a id="tab-2" href="#toptab-2" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Remote Job</a>
                             </li>
                             <li>
-                                <a href="#tab-3" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Current Openings</a>
+                                <a id="tab-3" href="#toptab-3" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Current Openings</a>
                             </li>
                         </ul>
                     </div>
@@ -391,7 +403,18 @@ function MainDesign(props) {
                     </div>
                     {/* From this */}
                     <div id="jobDiv" className=''>
-                        <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                        <div id='toptab-1' className={`${tab === "tab-1" ? "" : "hidden"}`}>
+                            {/* <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} /> */}
+                            <Tab2 />
+                        </div>
+                        <div id='toptab-2' className={`${tab === "tab-2" ? "" : "hidden"}`}>
+
+                            <Tab1 listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                        </div>
+                        <div id='toptab-3' className={`${tab === "tab-3" ? "" : "hidden"}`}>
+                            <Tab3 />
+                        </div>
+
                     </div>
 
                     {/* listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} */}
