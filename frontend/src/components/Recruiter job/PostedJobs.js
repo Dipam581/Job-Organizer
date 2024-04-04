@@ -106,7 +106,7 @@ function PostedJobs(props) {
     //Reset all filters
     function resteFilter() {
         console.log("reset");
-        let inputs = document.querySelectorAll('#checkbox-default-1');
+        let inputs = document.querySelectorAll('.check');
         for (let i = 0; i < inputs.length; i++) {
             inputs[i].checked = false;
         }
@@ -139,16 +139,16 @@ function PostedJobs(props) {
                         <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
                             <div className="grid grid-cols-12">
                                 <div className="col-span-12 w-full max-md:max-w-md max-md:mx-auto">
-                                    <div className="box rounded-xl border border-gray-300 bg-white p-6 w-full md:max-w-sm">
+                                    <div className="box rounded-xl border-2 border-blue-600 bg-white p-6 w-full md:max-w-sm shadow-xl">
                                         <div className="flex items-center justify-between w-full pb-3 border-b border-gray-200 mb-7">
-                                            <p className="font-bold text-xl leading-7 text-black ">Customize Job Search</p>
+                                            <p className="font-bold text-xl leading-7 text-blue-800 font-serif ">Customize Job Search</p>
                                             <OverlayTrigger placement="bottom" overlay={tooltip}>
                                                 <button className='' onClick={resteFilter}><GrPowerReset /></button>
                                             </OverlayTrigger>
                                         </div>
 
 
-                                        <label className="font-medium text-lg leading-6 text-black float-left">Company</label>
+                                        <label className="font-medium font-serif text-lg leading-6 text-blue-600 float-left">Company</label>
                                         <br></br>
                                         <div className="box flex flex-col gap-2 ml-4 mt-2">
                                             {filterCompany &&
@@ -157,13 +157,13 @@ function PostedJobs(props) {
                                                         <input
                                                             id={`comp-${comp}-${index}`}
                                                             type="checkbox"
-                                                            className="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                            className="check w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
                                                             onChange={handleCheckboxChange}
                                                             checked={checkedFilters[`comp-${comp}-${index}`]}
                                                         />
                                                         <label
                                                             htmlFor={`comp-${comp}-${index}`}
-                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer"
+                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif"
                                                         >
                                                             {comp}
                                                         </label>
@@ -173,7 +173,7 @@ function PostedJobs(props) {
                                         </div>
 
                                         <div>
-                                            <label className="font-medium text-lg leading-6 text-black float-left">Experience</label>
+                                            <label className="font-medium font-serif text-lg leading-6 text-blue-600 float-left">Experience</label>
                                             <br></br>
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
                                             {filterExp &&
@@ -182,13 +182,13 @@ function PostedJobs(props) {
                                                         <input
                                                             id={`exp-${exp}-${index}`}
                                                             type="checkbox"
-                                                            className="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                            className="check w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
                                                             onChange={handleCheckboxChange}
                                                             checked={checkedFilters[`exp-${exp}-${index}`]}
                                                         />
                                                         <label
                                                             htmlFor={`exp-${exp}-${index}`}
-                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer"
+                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif"
                                                         >
                                                             {exp}
                                                         </label>
@@ -197,12 +197,12 @@ function PostedJobs(props) {
                                             </div>
                                         </div>
                                         <div>
-                                            <label className="font-medium text-lg leading-6 text-black float-left">JobType</label>
+                                            <label className="font-medium font-serif text-lg leading-6 text-blue-600 float-left">JobType</label>
                                             <br></br>
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
                                                 <div className="flex items-center">
                                                     <input id="checkbox-default-1" type="checkbox" value="" className="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
-                                                    <label for="checkbox-default-1" id="type" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer">20% or more</label>
+                                                    <label for="checkbox-default-1" id="type" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif">20% or more</label>
                                                 </div>
 
                                             </div>
