@@ -3,7 +3,7 @@ import React from 'react'
 function Tab1(props) {
     return (
         <>
-            <div id="tab-1" className="tab-pane fade show p-0 active mb-2 grid grid-cols-4 gap-4">
+            <div id="tab-1" className="p-0 active mb-2 grid grid-cols-4 gap-4">
                 {props.listedJobs && props.listedJobs.map((job, index) => (
                     <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
                         <img className="w-full" src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt={job.title} />

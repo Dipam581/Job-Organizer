@@ -14,7 +14,7 @@ function PostedJobs(props) {
 
     //Tooltip
     const tooltip = (
-        <Tooltip id="tooltip" style={{ "font-size": "0.8rem" }}>
+        <Tooltip id="tooltip" style={{ "font-size": "0.8rem", "opacity" : "0.4" }}>
             Reset Filter
         </Tooltip>
     );
@@ -232,8 +232,8 @@ function PostedJobs(props) {
                 </div>
                 <div className="col-span-3 border-0">
                     {props.postedJob && props.postedJob.map((job, index) => (
-                        <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg">
-                            <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
+                        <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
+                            <div className="border" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
                                 <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
                             </div>
                             <div className="col-span-2 border-0">

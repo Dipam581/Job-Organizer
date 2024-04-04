@@ -22,6 +22,7 @@
     "react-spinners": "^0.13.8",
     "react-switch": "^7.0.0",
     "react-toggle": "^4.1.3",
+    "tw-elements-react": "^1.0.0-alpha2",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
