@@ -31,7 +31,7 @@ function MainDesign(props) {
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [loading, setLoading] = React.useState(false);
 
-    const [tab, setTab] = useState("");
+    const [tab, setTab] = useState("tab-1");
     const [visible, setVisible] = useState(false);
 
     function tabChange(e) {

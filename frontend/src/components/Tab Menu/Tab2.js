@@ -13,6 +13,36 @@ function Tab2() {
             "salary": 55,
             "mail": "abc",
         },
+        {
+            "company": "CTS",
+            "designation": "Developer",
+            "description": "Huge",
+            "skill": "AWS, C++, Python, Java",
+            "link": "www.google.com",
+            "yoe": 1,
+            "salary": 55,
+            "mail": "abc",
+        },
+        {
+            "company": "Wipro",
+            "designation": "Developer",
+            "description": "Huge",
+            "skill": "Docker, Python, Java",
+            "link": "www.google.com",
+            "yoe": 5,
+            "salary": 55,
+            "mail": "abc",
+        },
+        {
+            "company": "Nutarix",
+            "designation": "Developer",
+            "description": "Huge",
+            "skill": " Python, Java , AWS",
+            "link": "www.google.com",
+            "yoe": 3,
+            "salary": 55,
+            "mail": "abc",
+        },
     ]
     return (
         <>

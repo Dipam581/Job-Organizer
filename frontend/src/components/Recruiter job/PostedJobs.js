@@ -4,6 +4,10 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function PostedJobs(props) {
     const [data, setData] = useState([]);
+    const [filterCompany, setfilterCompany] = useState([]);
+    const [filterExp, setfilterExp] = useState([]);
+    const [filterJobType, setfilterJobType] = useState([]);
+    const [checkedFilters, setCheckedFilters] = useState({});
     console.log("posted jobs", props.postedJob);
 
 
@@ -40,22 +44,74 @@ function PostedJobs(props) {
         setData(postedJob);
     };
     useEffect(() => {
-        fetchData();
+        //fetchData();
     }, []);
 
     const getColor = (skill) => {
         const colorMap = {
-            "java": "#007396",
-            "python": "#3776AB",
+            "java": "#008800",
+            "python": "#7846AB",
             "c++": "#649AD2",
             "html": "#E34F26",
             "css": "#1572B6",
             "javascript": "#F7DF1E",
             "typeScript": "#3178C6",
-            "restful apis": "#6DB33F"
+            "restful apis": "#6DB33F",
+            "docker": "#f97316",
+            "aws": "#18a689"
         };
-        return colorMap[skill.toLowerCase()] || "#000000"; // Default to black if color not found
+        return colorMap[skill.toLowerCase().trim()] || "#000000"; // Default to black if color not found
     };
+
+    function fetchCompany() {
+        let data = props.postedJob;
+        let set1 = new Set();
+        let set2 = new Set();
+        let set3 = new Set();
+
+        for (let key in data) {
+            if (!set1.has(data[key].company)) {
+                set1.add(data[key].company);
+            }
+            if (!set2.has(data[key].yoe)) {
+                set2.add(data[key].yoe);
+            }
+            // if(!set3.has(data[key].type)){
+            //     set3.add(data[key].type);
+            // }
+        }
+        setfilterCompany(Array.from(set1).sort());
+        setfilterExp(Array.from(set2).sort());
+        //setfilterJobType(Array.from(set3));
+    }
+    useEffect(() => {
+        fetchCompany();
+    }, [props.postedJob]);
+
+    //Filter posted jobs
+    const handleCheckboxChange = (event) => {
+        const { id, checked } = event.target;
+        setCheckedFilters((prevState) => ({
+            ...prevState,
+            [id]: checked,
+        }));
+    };
+
+    function filterJob() {
+        console.log("clicked filter function");
+        let comp = document.querySelectorAll('#comp');
+
+    };
+
+    //Reset all filters
+    function resteFilter() {
+        console.log("reset");
+        let inputs = document.querySelectorAll('#checkbox-default-1');
+        for (let i = 0; i < inputs.length; i++) {
+            inputs[i].checked = false;
+        }
+    };
+
     return (
         <>
             {/* <div id="" className="p-0 mb-2">
@@ -87,7 +143,7 @@ function PostedJobs(props) {
                                         <div className="flex items-center justify-between w-full pb-3 border-b border-gray-200 mb-7">
                                             <p className="font-bold text-xl leading-7 text-black ">Customize Job Search</p>
                                             <OverlayTrigger placement="bottom" overlay={tooltip}>
-                                                <p className=' cursor-pointer'><GrPowerReset /></p>
+                                                <button className='' onClick={resteFilter}><GrPowerReset /></button>
                                             </OverlayTrigger>
                                         </div>
 
@@ -95,10 +151,24 @@ function PostedJobs(props) {
                                         <label className="font-medium text-lg leading-6 text-black float-left">Company</label>
                                         <br></br>
                                         <div className="box flex flex-col gap-2 ml-4 mt-2">
-                                            <div className="flex items-center">
-                                                <input id="checkbox-default-1" type="checkbox" value="" className="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
-                                                <label for="checkbox-default-1" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer">20% or more</label>
-                                            </div>
+                                            {filterCompany &&
+                                                filterCompany.map((comp, index) => (
+                                                    <div key={index} className="flex items-center">
+                                                        <input
+                                                            id={`comp-${comp}-${index}`}
+                                                            type="checkbox"
+                                                            className="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                            onChange={handleCheckboxChange}
+                                                            checked={checkedFilters[`comp-${comp}-${index}`]}
+                                                        />
+                                                        <label
+                                                            htmlFor={`comp-${comp}-${index}`}
+                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer"
+                                                        >
+                                                            {comp}
+                                                        </label>
+                                                    </div>
+                                                ))}
 
                                         </div>
 
@@ -106,11 +176,24 @@ function PostedJobs(props) {
                                             <label className="font-medium text-lg leading-6 text-black float-left">Experience</label>
                                             <br></br>
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
-                                                <div className="flex items-center">
-                                                    <input id="checkbox-default-1" type="checkbox" value="" className="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
-                                                    <label for="checkbox-default-1" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer">20% or more</label>
-                                                </div>
-
+                                            {filterExp &&
+                                                filterExp.map((exp, index) => (
+                                                    <div key={index} className="flex items-center">
+                                                        <input
+                                                            id={`exp-${exp}-${index}`}
+                                                            type="checkbox"
+                                                            className="w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                            onChange={handleCheckboxChange}
+                                                            checked={checkedFilters[`exp-${exp}-${index}`]}
+                                                        />
+                                                        <label
+                                                            htmlFor={`exp-${exp}-${index}`}
+                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer"
+                                                        >
+                                                            {exp}
+                                                        </label>
+                                                    </div>
+                                                ))}
                                             </div>
                                         </div>
                                         <div>
@@ -119,13 +202,13 @@ function PostedJobs(props) {
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
                                                 <div className="flex items-center">
                                                     <input id="checkbox-default-1" type="checkbox" value="" className="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
-                                                    <label for="checkbox-default-1" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer">20% or more</label>
+                                                    <label for="checkbox-default-1" id="type" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer">20% or more</label>
                                                 </div>
 
                                             </div>
                                         </div>
 
-                                        <button className="w-full mt-6 py-2.5 flex items-center justify-center gap-2 rounded-full bg-indigo-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-200  ">
+                                        <button className="w-full mt-6 py-2.5 flex items-center justify-center gap-2 rounded-full bg-indigo-600 text-white font-semibold text-xs shadow-sm shadow-transparent transition-all duration-500 hover:bg-indigo-700 hover:shadow-indigo-200" onClick={filterJob}>
                                             <svg width="17" height="16" viewBox="0 0 17 16" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -148,7 +231,7 @@ function PostedJobs(props) {
                     {/* Filter button end */}
                 </div>
                 <div className="col-span-3 border-0">
-                    {data && data.map((job, index) => (
+                    {props.postedJob && props.postedJob.map((job, index) => (
                         <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg">
                             <div className="border-0" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
                                 <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
@@ -161,7 +244,7 @@ function PostedJobs(props) {
                                     <span> | </span>
 
                                     {job.skill && job.skill.split(",").map((skill, index) => (
-                                        <span key={index} className='text-sm font-medium font-serif border border-green-200 rounded-xl p-1' style={{ "color": getColor(skill),"border-color" : getColor(skill) }}>
+                                        <span key={index} className='text-sm font-medium font-serif border border-green-200 rounded-xl p-1 mr-1' style={{ "color": getColor(skill), "border-color": getColor(skill) }}>
                                             {skill}
                                         </span>
                                     ))}
@@ -176,7 +259,7 @@ function PostedJobs(props) {
                                 <a href={job.link} target='blank'>
                                     <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
                                 </a>
-                                <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '180px' }}>
+                                <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '150px' }}>
                                     <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '69%' }}>69%</div>
                                 </div>
                             </div>
