@@ -231,6 +231,7 @@ function PostedJobs(props) {
                     {/* Filter button end */}
                 </div>
                 <div className="col-span-3 border-0">
+                    
                     {data && data.map((job, index) => (
                         <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
                             <div className="border" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
