@@ -19,21 +19,36 @@ function AdminPortal() {
       "description": e.target[2].value,
       "skill": e.target[3].value,
       "link": e.target[4].value,
-      "yoe": e.target[5].value,
-      "salary": e.target[6].value,
-      "mail": e.target[7].value,
+      "mail": e.target[5].value,
+      "yoe": e.target[6].value,
+      "salary": e.target[7].value,
+      "type": e.target[8].value,
+      // "image": e.target.image.files[0],
+      "image": e.target[9].value,
     }
     jobProfile.push(obj)
-    //addData()
-    // const jsonString = JSON.stringify(obj);
-    // const storageRef = ref(data, 'jobProfile.json');
-    // await uploadBytes(storageRef, new Blob([jsonString]));
-    // console.log("Job profile uploaded to Firebase Storage");
+
+    // const formData = new FormData();
+
+    // // Append form data to the FormData object
+    // formData.append("company", e.target[0].value);
+    // formData.append("designation", e.target[1].value);
+    // formData.append("description", e.target[2].value);
+    // formData.append("skill", e.target[3].value);
+    // formData.append("link", e.target[4].value);
+    // formData.append("mail", e.target[5].value);
+    // formData.append("yoe", e.target[6].value);
+    // formData.append("salary", e.target[7].value);
+    // formData.append("type", e.target[8].value);
+
+    // // Append the image file to the FormData object
+    // formData.append("image", e.target.image.files[0]);
 
 
     const response = await fetch('http://localhost:8080/fetchData', {
       method: "POST",
       body: JSON.stringify(obj),
+      //body: formData,
       headers: {
         'Content-Type': 'application/json'
       }
@@ -139,11 +154,11 @@ function AdminPortal() {
 
           <div>
             <span for="job-type" className="mb-2 text-lg font-medium font-serif text-gray-900 dark:text-white">Type</span>
-            <span className=''><input type="number" id="job-type" className="ml-44 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="3 - 5" required /></span>
+            <span className=''><input type="text" id="job-type" className="ml-44 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="3 - 5" required /></span>
           </div>
           <div>
             <label for="CompanyLogo" className=" mb-2 text-lg font-medium font-serif text-gray-900 dark:text-white">Company Logo</label>
-            <input class="w-64 p-2 text-sm ml-40  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
+            <input class="w-64 p-2 text-sm ml-40  text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="text" name="image" accept="image/*" />
           </div>
 
 

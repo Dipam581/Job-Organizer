@@ -4,6 +4,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function PostedJobs(props) {
     const [data, setData] = useState([]);
+    var postedJob = [];
     const [filterCompany, setfilterCompany] = useState([]);
     const [filterExp, setfilterExp] = useState([]);
     const [filterJobType, setfilterJobType] = useState([]);
@@ -26,7 +27,6 @@ function PostedJobs(props) {
         })
         const data = await response.json();
         console.log("called db data", data)
-        var postedJob = [];
 
         for (let key in data) {
             let obj = {
@@ -44,7 +44,7 @@ function PostedJobs(props) {
         setData(postedJob);
     };
     useEffect(() => {
-        //fetchData();
+        fetchData();
     }, []);
 
     const getColor = (skill) => {
@@ -64,20 +64,20 @@ function PostedJobs(props) {
     };
 
     function fetchCompany() {
-        let data = props.postedJob;
+        let obj = data;
         let set1 = new Set();
         let set2 = new Set();
         let set3 = new Set();
 
-        for (let key in data) {
-            if (!set1.has(data[key].company)) {
-                set1.add(data[key].company);
+        for (let key in obj) {
+            if (!set1.has(obj[key].company)) {
+                set1.add(obj[key].company);
             }
-            if (!set2.has(data[key].yoe)) {
-                set2.add(data[key].yoe);
+            if (!set2.has(obj[key].yoe)) {
+                set2.add(obj[key].yoe);
             }
-            // if(!set3.has(data[key].type)){
-            //     set3.add(data[key].type);
+            // if(!set3.has(obj[key].type)){
+            //     set3.add(obj[key].type);
             // }
         }
         setfilterCompany(Array.from(set1).sort());
@@ -86,7 +86,7 @@ function PostedJobs(props) {
     }
     useEffect(() => {
         fetchCompany();
-    }, [props.postedJob]);
+    }, [data]);
 
     //Filter posted jobs
     const handleCheckboxChange = (event) => {
@@ -231,16 +231,16 @@ function PostedJobs(props) {
                     {/* Filter button end */}
                 </div>
                 <div className="col-span-3 border-0">
-                    {props.postedJob && props.postedJob.map((job, index) => (
+                    {data && data.map((job, index) => (
                         <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
                             <div className="border" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
-                                <img className="" style={{ "width": "100%", "height": "auto" }} src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt="sdsdf" />
+                                <img className="" style={{ "width": "100%", "height": "auto" }} src={job.img ? job.img : "https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg"} alt="sdsdf" />
                             </div>
                             <div className="col-span-2 border-0">
                                 <div className='text-2xl font-medium mr-16 mt-6 font-serif'>{job.desg} </div>
                                 <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>{job.company} </div>
                                 <div className='mr-16 mt-4'>
-                                    <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>Full Time</span>
+                                    <span className='text-sm font-medium font-serif text-violet-500 border border-violet-200 rounded-xl p-1'>{job.type ? job.type : "Full Time"}</span>
                                     <span> | </span>
 
                                     {job.skill && job.skill.split(",").map((skill, index) => (
