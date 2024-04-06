@@ -31,13 +31,15 @@ function PostedJobs(props) {
         for (let key in data) {
             let obj = {
                 "company": data[key].company,
-                "designation": data[key].designation,
+                "designation": data[key].desg,
                 "description": data[key].description,
                 "skill": data[key].skill,
                 "link": data[key].link,
                 "yoe": data[key].yoe,
                 "salary": data[key].salary,
                 "mail": data[key].mail,
+                "type": data[key].type,
+                "image": data[key].image,
             }
             postedJob.push(obj)
         }
@@ -230,12 +232,14 @@ function PostedJobs(props) {
 
                     {/* Filter button end */}
                 </div>
+
+
                 <div className="col-span-3 border-0">
                     
                     {data && data.map((job, index) => (
                         <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
                             <div className="border" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
-                                <img className="" style={{ "width": "100%", "height": "auto" }} src={job.img ? job.img : "https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg"} alt="sdsdf" />
+                                <img className="" style={{ "width": "100%", "height": "auto" }} src={job.image ? job.image : "https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg"} alt="sdsdf" />
                             </div>
                             <div className="col-span-2 border-0">
                                 <div className='text-2xl font-medium mr-16 mt-6 font-serif'>{job.desg} </div>
