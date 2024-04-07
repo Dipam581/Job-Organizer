@@ -38,6 +38,9 @@ const jobPostingData = new mongoose.Schema({
     "salary" : Number,
     "type" : String,
     "image" : String,
+    "fname" : String,
+    "lname" : String,
+    "location" : String,
   });
 
   const JobPostData = mongoose.model('Jobdata', jobPostingData);
@@ -77,7 +80,9 @@ server.post("/fetchData",async (req,res)=>{
     jData.mail = req.body.mail;
     jData.image = req.body.image;
     jData.type = req.body.type;
-
+    jData.fname = req.body.fname;
+    jData.lname = req.body.lname;
+    jData.location = req.body.location;
 
 
     const doc = await jData.save()
