@@ -4,18 +4,21 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 function PostedJobs(props) {
     const [data, setData] = useState([]);
+    const [searchData, setSearchData] = useState([]);
+
     var postedJob = [];
     const [filterCompany, setfilterCompany] = useState([]);
     const [filterExp, setfilterExp] = useState([]);
     const [filterJobType, setfilterJobType] = useState([]);
     const [checkedFilters, setCheckedFilters] = useState({});
+    const jobSkill = ["python", "java", "django", "react", "node", "docker", "aws", "llm", "spring boot", "javascript", "restfull api", "html"]
     console.log("posted jobs", props.postedJob);
 
 
 
     //Tooltip
     const tooltip = (
-        <Tooltip id="tooltip" style={{ "font-size": "0.8rem", "opacity" : "0.4" }}>
+        <Tooltip id="tooltip" style={{ "font-size": "0.8rem", "opacity": "0.4" }}>
             Reset Filter
         </Tooltip>
     );
@@ -44,6 +47,7 @@ function PostedJobs(props) {
             postedJob.push(obj)
         }
         setData(postedJob);
+        setSearchData(postedJob);
     };
     useEffect(() => {
         fetchData();
@@ -66,7 +70,7 @@ function PostedJobs(props) {
     };
 
     function fetchCompany() {
-        let obj = data;
+        let obj = searchData;
         let set1 = new Set();
         let set2 = new Set();
         let set3 = new Set();
@@ -78,61 +82,70 @@ function PostedJobs(props) {
             if (!set2.has(obj[key].yoe)) {
                 set2.add(obj[key].yoe);
             }
-            // if(!set3.has(obj[key].type)){
-            //     set3.add(obj[key].type);
-            // }
+            if (obj[key].type && !set3.has(obj[key].type)) {
+                set3.add(obj[key].type);
+            }
         }
         setfilterCompany(Array.from(set1).sort());
         setfilterExp(Array.from(set2).sort());
-        //setfilterJobType(Array.from(set3));
+        setfilterJobType(Array.from(set3));
     }
     useEffect(() => {
         fetchCompany();
-    }, [data]);
+    }, [searchData]);
 
     //Filter posted jobs
     const handleCheckboxChange = (event) => {
         const { id, checked } = event.target;
-        setCheckedFilters((prevState) => ({
-            ...prevState,
-            [id]: checked,
-        }));
+        if (checked) {
+            setCheckedFilters((prevState) => ({
+                ...prevState,
+                [id]: checked,
+            }));
+        } else {
+            setCheckedFilters((prevState) => {
+                const newState = { ...prevState };
+                delete newState[id];
+                return newState;
+            });
+        }
     };
 
     function filterJob() {
-        console.log("clicked filter function");
-        let comp = document.querySelectorAll('#comp');
+        console.log("clicked filter function", checkedFilters);
+        let filters = Object.keys(checkedFilters);
+        let c = [];
+        let e = [];
+        let t = [];
 
+        for (let i = 0; i < filters.length; i++) {
+            if (filters[i].split("-")[0] == "comp") {
+                c.push(filters[i].split("-")[1]);
+            } else if (filters[i].split("-")[0] == "exp") {
+                e.push(filters[i].split("-")[1]);
+            } else {
+                t.push(filters[i].split("-")[1]);
+            }
+        }
+        if (c.length > 0 || e.length > 0 || t.length > 0) {
+            const filteredData = searchData.filter(job =>
+                c.includes(job.company) ||
+                e.includes(job.yoe.toString()) ||
+                t.includes(job.type)
+            );
+            setData(filteredData);
+        }
     };
 
     //Reset all filters
     function resteFilter() {
         console.log("reset");
-        let inputs = document.querySelectorAll('.check');
-        for (let i = 0; i < inputs.length; i++) {
-            inputs[i].checked = false;
-        }
+        setCheckedFilters({});
+        setData(searchData);
     };
 
     return (
         <>
-            {/* <div id="" className="p-0 mb-2">
-                {props.postedJob && props.postedJob.map((job, index) => (
-                    <div key={index} className="max-w-sm rounded overflow-hidden shadow-lg">
-                        <img className="w-full" src="https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg" alt={job.designation} />
-                        <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">{job.company}</div>
-                            <p className="text-gray-700 text-base">{job.skill}</p>
-                        </div>
-                        <a href={job.link} target='blank'>
-                            <button className="inline-block justify-center bg-green-600 rounded-full px-3 py-1 text-bold font-semibold text-white mr-2 mb-2">
-                                Apply Now
-                            </button>
-                        </a>
-                    </div>
-                ))}
-            </div> */}
-
             <div className="grid grid-cols-4 gap-4 mb-8">
                 <div className="col-span-1 border-0">
                     {/* Fiter button start */}
@@ -148,7 +161,6 @@ function PostedJobs(props) {
                                                 <button className='' onClick={resteFilter}><GrPowerReset /></button>
                                             </OverlayTrigger>
                                         </div>
-
 
                                         <label className="font-medium font-serif text-lg leading-6 text-blue-600 float-left">Company</label>
                                         <br></br>
@@ -178,24 +190,24 @@ function PostedJobs(props) {
                                             <label className="font-medium font-serif text-lg leading-6 text-blue-600 float-left">Experience</label>
                                             <br></br>
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
-                                            {filterExp &&
-                                                filterExp.map((exp, index) => (
-                                                    <div key={index} className="flex items-center">
-                                                        <input
-                                                            id={`exp-${exp}-${index}`}
-                                                            type="checkbox"
-                                                            className="check w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
-                                                            onChange={handleCheckboxChange}
-                                                            checked={checkedFilters[`exp-${exp}-${index}`]}
-                                                        />
-                                                        <label
-                                                            htmlFor={`exp-${exp}-${index}`}
-                                                            className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif"
-                                                        >
-                                                            {exp}
-                                                        </label>
-                                                    </div>
-                                                ))}
+                                                {filterExp &&
+                                                    filterExp.map((exp, index) => (
+                                                        <div key={index} className="flex items-center">
+                                                            <input
+                                                                id={`exp-${exp}-${index}`}
+                                                                type="checkbox"
+                                                                className="check w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                                onChange={handleCheckboxChange}
+                                                                checked={checkedFilters[`exp-${exp}-${index}`]}
+                                                            />
+                                                            <label
+                                                                htmlFor={`exp-${exp}-${index}`}
+                                                                className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif"
+                                                            >
+                                                                {exp}
+                                                            </label>
+                                                        </div>
+                                                    ))}
                                             </div>
                                         </div>
                                         <div>
@@ -203,8 +215,24 @@ function PostedJobs(props) {
                                             <br></br>
                                             <div className="box flex flex-col gap-2 ml-4 mt-2">
                                                 <div className="flex items-center">
-                                                    <input id="checkbox-default-1" type="checkbox" value="" className="w-5 h-5 appearance-none border border-gray-300  rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]" />
-                                                    <label for="checkbox-default-1" id="type" className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif">20% or more</label>
+                                                    {filterJobType &&
+                                                        filterJobType.map((type, index) => (
+                                                            <div key={index} className="flex items-center">
+                                                                <input
+                                                                    id={`type-${type}-${index}`}
+                                                                    type="checkbox"
+                                                                    className="check w-5 h-5 appearance-none border border-gray-300 rounded-md mr-2 hover:border-indigo-500 hover:bg-indigo-100 checked:bg-no-repeat checked:bg-center checked:border-indigo-500 checked:bg-indigo-100 checked:bg-[url('https://pagedone.io/asset/uploads/1689406942.svg')]"
+                                                                    onChange={handleCheckboxChange}
+                                                                    checked={checkedFilters[`type-${type}-${index}`]}
+                                                                />
+                                                                <label
+                                                                    htmlFor={`type-${type}-${index}`}
+                                                                    className="text-sm font-normal text-gray-600 leading-4 cursor-pointer font-serif"
+                                                                >
+                                                                    {type}
+                                                                </label>
+                                                            </div>
+                                                        ))}
                                                 </div>
 
                                             </div>
@@ -227,20 +255,26 @@ function PostedJobs(props) {
                         </div>
                     </section>
 
-
-
-
                     {/* Filter button end */}
                 </div>
 
-
                 <div className="col-span-3 border-0">
-                    
+
                     {data && data.map((job, index) => (
                         <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
-                            <div className="border" style={{ "width": "15rem", "height": "10rem", "border-radius": "50%", "overflow": "hidden" }}>
-                                <img className="" style={{ "width": "100%", "height": "auto" }} src={job.image ? job.image : "https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg"} alt="sdsdf" />
+                            <div className="border-2" style={{
+                                "width": "15rem", // Original size
+                                "height": "10rem", // Original size
+                                "borderRadius": "50%",
+                                "overflow": "hidden",
+                                "backgroundImage": `url(${job.image ? job.image : "https://img.freepik.com/free-psd/silver-letters-glass-building-facade_145275-162.jpg"})`,
+                                "backgroundSize": "cover", // This will ensure that the background covers the div area
+                                "backgroundPosition": "center", // This will center the image within the div
+                                "backgroundRepeat": "no-repeat"
+                            }}>
+                                {/* No img tag needed */}
                             </div>
+
                             <div className="col-span-2 border-0">
                                 <div className='text-2xl font-medium mr-16 mt-6 font-serif'>{job.desg} </div>
                                 <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>{job.company} </div>
@@ -249,9 +283,11 @@ function PostedJobs(props) {
                                     <span> | </span>
 
                                     {job.skill && job.skill.split(",").map((skill, index) => (
-                                        <span key={index} className='text-sm font-medium font-serif border border-green-200 rounded-xl p-1 mr-1' style={{ "color": getColor(skill), "border-color": getColor(skill) }}>
-                                            {skill}
-                                        </span>
+                                        jobSkill.includes(skill.toLowerCase().trim()) && (
+                                            <span key={index} className='text-sm font-medium font-serif border border-green-200 rounded-xl p-1 mr-1' style={{ "color": getColor(skill), "border-color": getColor(skill) }}>
+                                                {skill}
+                                            </span>
+                                        )
                                     ))}
 
                                     {/* <span className='text-sm font-medium font-serif text-blue-500 border border-blue-200 rounded-xl p-1'>AWS</span>
