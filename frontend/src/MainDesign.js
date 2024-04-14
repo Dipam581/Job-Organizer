@@ -31,13 +31,14 @@ function MainDesign(props) {
     const [allJobs, setAllJobs] = useState([]);
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [loading, setLoading] = React.useState(false);
+    const [divFlag, setDivFlag] = useState("hidden");
 
     const [tab, setTab] = useState("tab-1");
     const [visible, setVisible] = useState(false);
 
     // upload Resume function
     function rusumeButton() {
-
+        setDivFlag("");
     };
 
     function tabChange(e) {
@@ -234,7 +235,7 @@ function MainDesign(props) {
                             <span>Upload Resume</span>
                         </Button> */}
                         <Button variant="gradient" size="sm" className="rounded-xl bg-gradient-to-br from-[#6025F5] to-[#FF5555] px-5 py-3 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#6025F5]/50" onClick={rusumeButton}>
-                        Upload Resume
+                            Upload Resume
                         </Button>
 
                         <DarkModeToggle />
@@ -295,11 +296,11 @@ function MainDesign(props) {
             <div className="container m-auto">
 
                 <div className="tab-className text-center fadeInUp mt-6" data-wow-delay="0.3s">
-                    <div>
+                    <div className={`${divFlag}`}>
                         <ResumeUpload />
                     </div>
 
-                    <div className="relative ">
+                    <div className="relative">
                         <div className="relative">
                             <img className="w-full shadow-xl" src="https://cdn.rasayanika.com/wp-content/uploads/2023/12/kW7yv9eBdzpwekgJYNLRwa5Px.jpg" alt="" />
                             <div className="absolute top-48 right-2">
