@@ -7,6 +7,7 @@ import DarkModeToggle from './components/DarkModeToggle';
 import Tab1 from './components/Tab Menu/Tab1';
 import Tab2 from './components/Tab Menu/Tab2';
 import Tab3 from './components/Tab Menu/Tab2';
+import ResumeUpload from './components/ResumeUpload';
 import { useState, useEffect } from 'react';
 import {
     Navbar,
@@ -34,6 +35,11 @@ function MainDesign(props) {
     const [tab, setTab] = useState("tab-1");
     const [visible, setVisible] = useState(false);
 
+    // upload Resume function
+    function rusumeButton() {
+
+    };
+
     function tabChange(e) {
         console.log("tab clicked");
         let id = e?.currentTarget?.id || "";
@@ -55,8 +61,8 @@ function MainDesign(props) {
 
 
     const handleCompanyChange = param => (event) => {
-        if (param == "company") setSelectedCompany(event.target.value);
-        else if (param == "location") setSelectedLocation(event.target.value);
+        if (param === "company") setSelectedCompany(event.target.value);
+        else if (param === "location") setSelectedLocation(event.target.value);
         else setSelectedWord(event.target.value);
 
     };
@@ -218,13 +224,19 @@ function MainDesign(props) {
                         <Button variant="text" size="sm" className="hidden lg:inline-block">
                             <span>Log In</span>
                         </Button>
-                        <Button
+
+                        {/* <Button
                             variant="gradient"
                             size="sm"
                             className="hidden lg:inline-block text-black bg-white border-2 border-blue-500"
+                            onClick={rusumeButton}
                         >
                             <span>Upload Resume</span>
+                        </Button> */}
+                        <Button variant="gradient" size="sm" className="rounded-xl bg-gradient-to-br from-[#6025F5] to-[#FF5555] px-5 py-3 text-base font-medium text-white transition duration-200 hover:shadow-lg hover:shadow-[#6025F5]/50" onClick={rusumeButton}>
+                        Upload Resume
                         </Button>
+
                         <DarkModeToggle />
                     </div>
                     <IconButton
@@ -283,25 +295,13 @@ function MainDesign(props) {
             <div className="container m-auto">
 
                 <div className="tab-className text-center fadeInUp mt-6" data-wow-delay="0.3s">
+                    <div>
+                        <ResumeUpload />
+                    </div>
 
                     <div className="relative ">
                         <div className="relative">
                             <img className="w-full shadow-xl" src="https://cdn.rasayanika.com/wp-content/uploads/2023/12/kW7yv9eBdzpwekgJYNLRwa5Px.jpg" alt="" />
-                            {/* <div className="absolute top-48 left-70">
-                                <div className="container">
-                                    <div className="row justify-content-start">
-                                        <div className="border">
-                                            <h1 className="text-green-500 font-bold text-6xl mb-4 border-l-8">Find The Perfect Job That</h1>
-                                            <h1 className="text-green-500 font-bold text-6xl mb-4 border-l-8">You Deserved</h1>
-                                        </div>
-                                    </div>
-
-                                    <div className=''>
-                                        <button className="border-0 absolute left-6 mt-4 text-xl font-bold text-white bg-green-500" style={{ "width": "12rem", "height": "4rem" }} onClick={navigateDiv}>Find A Job</button>
-                                        <button className="border-0 absolute left-60 mt-4 text-xl font-bold text-white bg-blue-500" style={{ "width": "12rem", "height": "4rem" }}>Search With Resume</button>
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className="absolute top-48 right-2">
 
                                 <div className="grid grid-cols-1 gap-1 border-2 border-green-500 rounded-xl bg-white">
