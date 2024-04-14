@@ -1,4 +1,5 @@
-import { React, useState } from 'react'
+import { React, useState } from 'react';
+import axios from 'axios';
 
 function ResumeUpload() {
     const [progress, setProgress] = useState(0);
@@ -6,12 +7,26 @@ function ResumeUpload() {
     const [divFlag, setDivFlag] = useState("hidden");
 
     console.log("resume upload process called.");
-    const handleFileUpload = (event) => {
+    const handleFileUpload  = async (event) => {
         setDivFlag("");
+
         console.log("resume upload process called.");
         const file = event.target.files[0];
-        setFileName(file['name']);
+        setFileName(file?.['name'] || "");
+
         const reader = new FileReader();
+        const formData = new FormData();
+        formData.append('resume', file);
+
+        try {
+            const response = await axios.post('../../../Backend_Python/resumeParse.py', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+        } catch (error) {
+            console.error('Error parsing resume:', error);
+        }
 
         reader.onprogress = (e) => {
             const progressPercentage = Math.round((e.loaded / e.total) * 100);
