@@ -41,6 +41,7 @@ function ResumeUpload() {
             });
             const responseData = await response.json();
             console.log(responseData);
+            alert("Resume uploaded successfully");
         } catch (error) {
             console.error('Error:', error);
         }
