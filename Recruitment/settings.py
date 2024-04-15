@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-e=_s-wud5da2e)6przh5avt@mp=ya1f(%pel5s4=z_i*=3ey1g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 AUTH_KEY = '417910AU7MKRG8u65ed57c1P1'
 
@@ -43,12 +43,20 @@ INSTALLED_APPS = [
     "Login",
     "Home",
     "JobData",
+    "FetchData",
 
     'rest_framework',
     'corsheaders',
 ]
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # The default React development server address
+    "http://127.0.0.1:3000",  # If you access your React app through 127.0.0.1
+]
+CSRF_TRUSTED_ORIGINS = ['https://localhost:3000', 'https://127.0.0.1:3000']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -59,7 +67,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_ALL_ORIGINS = True
+
 #CORS_ORIGIN_WHITELIST = [
 #    'http://localhost:3000',
 #]

@@ -7,10 +7,12 @@ function ResumeUpload() {
     const [divFlag, setDivFlag] = useState("hidden");
 
     console.log("resume upload process called.");
-    const handleFileUpload  = async (event) => {
+
+
+    const handleFileUpload = async (event) => {
         setDivFlag("");
 
-        console.log("resume upload process called.");
+        //console.log("resume upload process called.");
         const file = event.target.files[0];
         setFileName(file?.['name'] || "");
 
@@ -18,14 +20,29 @@ function ResumeUpload() {
         const formData = new FormData();
         formData.append('resume', file);
 
+        const csrfToken = sessionStorage.getItem('csrfToken');
+
+        // try {
+        //     const response = await axios.post('http://127.0.0.1:8000/jobdata/', formData, {
+        //         withCredentials: true,
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data',
+        //             'X-CSRFToken': csrfToken,
+        //         }
+        //     });
+
+        // } catch (error) {
+        //     console.error('Error parsing resume:', error);
+        // }
         try {
-            const response = await axios.post('../../../Backend_Python/resumeParse.py', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+            const response = await fetch('http://127.0.0.1:8000/fetch/api/data/', {
+                method: 'POST',
+    body: formData,
             });
+            const responseData = await response.json();
+            console.log(responseData);
         } catch (error) {
-            console.error('Error parsing resume:', error);
+            console.error('Error:', error);
         }
 
         reader.onprogress = (e) => {
@@ -43,6 +60,7 @@ function ResumeUpload() {
         };
         reader.readAsDataURL(file);
     };
+
     const animateProgressBar = (start, end) => {
         const step = 1;
         const duration = 1000; // Duration in milliseconds

@@ -8,5 +8,6 @@ urlpatterns = [
     path('', include('Login.urls')),
     path('home/', include('Home.urls')),
     path('jobdata/', include('JobData.urls')),
+    path('fetch/', include('FetchData.urls')),
     # path('', index),
 ]

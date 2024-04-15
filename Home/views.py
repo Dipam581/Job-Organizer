@@ -3,6 +3,7 @@ from django.http import HttpResponse
 import requests
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
 
 # Create your views here.
 
@@ -158,13 +159,14 @@ def Home(request):
     sorted_data = checkDuplicates(sorted_data)
     
     
-
+    csrf_token = get_token(request)
 
     data = {
         'jobs': sorted_data,
         'remoteJob': sorted_remote_job,
         'locationSet': locationSet,
-        'companySet': companySet
+        'companySet': companySet,
+        'csrfToken': csrf_token,
     }
     
     # Returning JSON response
