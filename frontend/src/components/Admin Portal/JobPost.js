@@ -3,6 +3,7 @@ import { useState } from 'react';
 // import { TEInput, TERipple } from "tw-elements-react";
 import InputForm from './InputForm';
 import Description from './Description';
+import LocationFilter from '../LocationFilter';
 
 function JobPost() {
     var jobProfile = [];
@@ -115,6 +116,7 @@ function JobPost() {
 
                                         <div className="row">
                                             <Description  handleInputChangeFormDescription={handleInputChangeFormDescription}/>
+                                            <LocationFilter/>
                                         </div>
 
                                         {/* <div className="">
