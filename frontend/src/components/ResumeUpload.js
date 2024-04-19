@@ -5,7 +5,7 @@ function ResumeUpload() {
     const [progress, setProgress] = useState(0);
     const [fileName, setFileName] = useState("");
     const [divFlag, setDivFlag] = useState("hidden");
-    const [flag,setFlag] = useState(true)
+    const [flag, setFlag] = useState(true)
 
     console.log("resume upload process called.");
 
@@ -42,7 +42,8 @@ function ResumeUpload() {
             });
             const responseData = await response.json();
             console.log(responseData);
-            setFlag(false)
+            setFlag(false);
+            fetchData()
         } catch (error) {
             console.error('Error:', error);
         }
@@ -83,25 +84,24 @@ function ResumeUpload() {
     //Fetch resume informations from backend
     const [resumeData, setResumeData] = useState([])
     console.log("From HelloWorld.js comp:");
+    const fetchData = async () => {
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch('http://127.0.0.1:8000/fetch/api/data/send');
-                if (!response.ok) {
-                    throw new Error("Not found your request")
-                }
-                const result = await response.json();
-                console.log(result)
-                sessionStorage.setItem('csrfToken', result.csrfToken);
-                setResumeData(result)
-            } catch (error) {
-                console.log("error in fetching data", error);
+        try {
+            const response = await fetch('http://127.0.0.1:8000/fetch/api/data/send');
+            if (!response.ok) {
+                throw new Error("Not found your request")
             }
+            const result = await response.json();
+            console.log(result)
+            sessionStorage.setItem('csrfToken', result.csrfToken);
+            setResumeData(result)
+        } catch (error) {
+            console.log("error in fetching data", error);
         }
-        fetchData();
+    }
 
-    }, [flag])
+
+
 
     return (
         <>
