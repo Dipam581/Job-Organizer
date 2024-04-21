@@ -570,6 +570,8 @@ def basicdetails(lines,text):
     email=(extract_email(text))
     print(email)
     dictionary["Email"]=email
+    print("version",nltk.data.path)
+    nltk.download('punkt', download_dir='C:\\Users\\DIPAM GHOSH\\Envs\\dipam\\nltk_data')
 
 
 

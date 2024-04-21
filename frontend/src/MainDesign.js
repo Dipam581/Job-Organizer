@@ -40,6 +40,10 @@ function MainDesign(props) {
     function rusumeButton() {
         setDivFlag("");
     };
+    const resumeClick = () => {
+        console.log("resume parsed");
+        setDivFlag("hidden");
+    };
 
     function tabChange(e) {
         console.log("tab clicked");
@@ -297,7 +301,7 @@ function MainDesign(props) {
 
                 <div className="tab-className text-center fadeInUp mt-6" data-wow-delay="0.3s">
                     <div className={`${divFlag}`}>
-                        <ResumeUpload />
+                        <ResumeUpload resumeClick = {resumeClick}/>
                     </div>
 
                     <div className="relative">

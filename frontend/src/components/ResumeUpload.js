@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ResumeUpload() {
+function ResumeUpload({resumeClick}) {
     const [progress, setProgress] = useState(0);
     const [fileName, setFileName] = useState("");
     const [divFlag, setDivFlag] = useState("hidden");
@@ -56,6 +56,7 @@ function ResumeUpload() {
         setTimeout(() => {
             setDivFlag("hidden");
             setProgress(0);
+            resumeClick();
         }, 3000);
 
         reader.onload = (e) => {
