@@ -306,7 +306,7 @@ function MainDesign(props) {
 
                     <div className="relative">
                         <div className="relative">
-                            <img className="w-full shadow-xl" src="https://cdn.rasayanika.com/wp-content/uploads/2023/12/kW7yv9eBdzpwekgJYNLRwa5Px.jpg" alt="" />
+                            <img className="w-full shadow-xl" src="https://www.theforage.com/blog/wp-content/uploads/2022/09/tech-companies.jpg" alt="" />
                             <div className="absolute top-48 right-2">
 
                                 <div className="grid grid-cols-1 gap-1 border-2 border-green-500 rounded-xl bg-white">
