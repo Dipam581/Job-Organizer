@@ -8,6 +8,8 @@ import Tab1 from './components/Tab Menu/Tab1';
 import Tab2 from './components/Tab Menu/Tab2';
 import Tab3 from './components/Tab Menu/Tab2';
 import ResumeUpload from './components/ResumeUpload';
+import DynamicJobFinder from './components/DynamicJobFinder';
+import StarterComponent from './components/StarterComponent';
 import { useState, useEffect } from 'react';
 import {
     Navbar,
@@ -301,15 +303,17 @@ function MainDesign(props) {
 
                 <div className="tab-className text-center fadeInUp mt-6" data-wow-delay="0.3s">
                     <div className={`${divFlag}`}>
-                        <ResumeUpload resumeClick = {resumeClick}/>
+                        <ResumeUpload resumeClick={resumeClick} />
                     </div>
 
                     <div className="relative">
                         <div className="relative">
                             <img className="w-full shadow-xl" src="https://www.theforage.com/blog/wp-content/uploads/2022/09/tech-companies.jpg" alt="" />
-                            <div className="absolute top-48 right-2">
+                            <div className="absolute top-48" style={{ "right": "26rem" }}>
+                                <DynamicJobFinder />
+                                <StarterComponent/>
 
-                                <div className="grid grid-cols-1 gap-1 border-2 border-green-500 rounded-xl bg-white">
+                                {/* <div className="grid grid-cols-1 gap-1 border-2 border-green-500 rounded-xl bg-white">
                                     <div className="p-6">
                                         <select id="companyDropdown" className="border-2 w-full text-left h-9 border-green-500" value={selectedCompany} onChange={handleCompanyChange("company")}>
                                             <option className='text-center' value="" disabled selected>Company</option>
@@ -332,7 +336,7 @@ function MainDesign(props) {
                                     <div className="p-6">
                                         <h1 className="text-green-300 underline text-xl font-bold ml-12 cursor-pointer" style={{ "width": "55%", "height": "100%" }} onClick={searchJob}>Search</h1>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,27 @@
+/* styles.css */
+.character-fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+.character-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    display: 'none';
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

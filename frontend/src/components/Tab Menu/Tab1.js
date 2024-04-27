@@ -30,7 +30,7 @@ function Tab1(props) {
                     key={i + 1}
                     onClick={() => goToPage(i + 1)}
                     // className={`px-4 py-2 ${currentPage === i + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'} rounded hover:bg-blue-500`}
-                    className={`${currentPage === i + 1 ? 'bg-pink-500 text-white' : 'bg-gray-200'} mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-500 transition duration-150 ease-in-out hover:bg-light-300`}
+                    className={`${currentPage === i + 1 ? 'bg-green-500 text-white' : 'bg-gray-200'} mx-1 flex h-9 w-9 items-center justify-center rounded-full border border-blue-gray-100 bg-transparent p-0 text-sm text-blue-500 transition duration-150 ease-in-out hover:bg-light-300`}
                 >
                     {i + 1}
                 </button>
