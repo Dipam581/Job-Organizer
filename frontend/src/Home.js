@@ -67,12 +67,12 @@ function Home(props) {
 
     return (
         <>
-            <div className='' style={{"background" : "linear-gradient(to right, #0a0f4b, #8c6a83, #4b96c9)"}}>
+            {/* <div className='' style={{"background" : "linear-gradient(to right, #0a0f4b, #8c6a83, #4b96c9)"}}> */}
                 {jobsData && company && location && <MainDesign jobs={jobsData} company={company} locationSet={location} />}
                 {/* <MainDesign  jobs={jobsData}/> */}
                 {/* {jobsData && <JobListings jobs={dd} />} */}
 
-            </div>
+            {/* </div> */}
         </>
     );
 }

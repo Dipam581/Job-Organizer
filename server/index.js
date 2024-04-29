@@ -4,12 +4,24 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const multer = require('multer');
 
-main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/jobportal');
-  console.log("DB connected")
-}
+//Changes made to connect Atlas Database - Start
+
+//main().catch(err => console.log(err));
+
+// async function main() {
+//   await mongoose.connect('mongodb://127.0.0.1:27017/jobportal');
+//   console.log("DB connected")
+// }
+
+
+mongoose.connect('mongodb+srv://dipamghosh:itJTiJ0EIsNwxT9O@reactproject.mdrdesm.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("DB connected"))
+  .catch(err => console.log(err));
+
+
+//Changes made to connect Atlas Database - End
+
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
