@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { GrPowerReset } from "react-icons/gr";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
-function PostedJobs(props) {
+function ResumeBasedJobs(props) {
     const [data, setData] = useState([]);
     const [searchData, setSearchData] = useState([]);
 
@@ -12,7 +12,7 @@ function PostedJobs(props) {
     const [filterJobType, setfilterJobType] = useState([]);
     const [checkedFilters, setCheckedFilters] = useState({});
     const jobSkill = ["python", "java", "django", "react", "node", "docker", "aws", "llm", "spring boot", "javascript", "restfull api", "html"]
-    console.log("posted jobs", props.postedJob);
+    console.log("ResumeBasedJobs", props);
 
 
 
@@ -315,4 +315,4 @@ function PostedJobs(props) {
     )
 }
 
-export default PostedJobs
+export default ResumeBasedJobs

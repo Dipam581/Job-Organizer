@@ -1,13 +1,15 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
+import ResumeBasedJobs from './Recruiter job/ResumeBasedJobs';
 
 function ResumeUpload({resumeClick}) {
     const [progress, setProgress] = useState(0);
     const [fileName, setFileName] = useState("");
     const [divFlag, setDivFlag] = useState("hidden");
-    const [flag, setFlag] = useState(true)
+    const [flag, setFlag] = useState(true);
+    const [resume_Data, setData] = useState([]);
 
-    console.log("resume upload process called.");
+    //console.log("resume upload process called.");
 
 
     const handleFileUpload = async (event) => {
@@ -22,35 +24,22 @@ function ResumeUpload({resumeClick}) {
         formData.append('resume', file);
 
         const csrfToken = sessionStorage.getItem('csrfToken');
-
-        // try {
-        //     const response = await axios.post('http://127.0.0.1:8000/jobdata/', formData, {
-        //         withCredentials: true,
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data',
-        //             'X-CSRFToken': csrfToken,
-        //         }
-        //     });
-
-        // } catch (error) {
-        //     console.error('Error parsing resume:', error);
-        // }
         try {
             const response = await fetch('http://127.0.0.1:8000/fetch/api/data/', {
                 method: 'POST',
                 body: formData,
             });
-            const responseData = await response.json();
+            var responseData = await response.json();
             console.log(responseData);
+            setData(responseData.resume_details);
             setFlag(false);
-            fetchData()
+            //fetchData()
         } catch (error) {
             console.error('Error:', error);
         }
 
         reader.onprogress = (e) => {
             const progressPercentage = Math.round((e.loaded / e.total) * 100);
-            //setProgress(progressPercentage);
             animateProgressBar(progress, progressPercentage);
         };
         setTimeout(() => {
@@ -106,6 +95,7 @@ function ResumeUpload({resumeClick}) {
 
     return (
         <>
+            {resume_Data && Object.values(resume_Data).length > 0 && <ResumeBasedJobs responseData={resume_Data} />}
             <div className="grid sm:grid-cols-2 gap-12 p-4 absolute mt-24" style={{ "z-index": "2", "width": "65rem", "margin-left": "20rem" }}>
                 <div for="uploadFile1"
                     className="bg-green-400 text-center px-4 rounded w-full h-80 flex flex-col items-center justify-center border-2 border-gray-400 border-dashed font-[sans-serif] top-0 transition-transform duration-1000 transform">

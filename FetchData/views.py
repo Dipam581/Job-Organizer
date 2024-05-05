@@ -39,7 +39,7 @@ def receive_data(request):
 #--------------------------
             a = handle_uploaded_file(file)
             dictionary=handlefile(file)
-            return JsonResponse({'status': 'success', 'file_name': file.name, 'file_size': file.size})
+            return JsonResponse({'status': 'success', 'file_name': file.name, 'file_size': file.size, "resume_details" : dictionary})
         else:
             return JsonResponse({'status': 'error', 'message': 'No file received.'})
     else:
@@ -571,7 +571,7 @@ def basicdetails(lines,text):
     print(email)
     dictionary["Email"]=email
     print("version",nltk.data.path)
-    nltk.download('punkt', download_dir='C:\\Users\\DIPAM GHOSH\\Envs\\dipam\\nltk_data')
+    #nltk.download('punkt', download_dir='C:\\Users\\DIPAM GHOSH\\Envs\\dipam\\nltk_data')
 
 
 
