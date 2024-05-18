@@ -300,9 +300,9 @@ function PostedJobs(props) {
                                 <a href={job.link} target='blank'>
                                     <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
                                 </a>
-                                <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '150px' }}>
+                                {/* <div className="bg-gray-200 rounded-full dark:bg-gray-700 mt-2" style={{ width: '100%', maxWidth: '150px' }}>
                                     <div className="bg-blue-600 text-xs font-medium text-blue-100 text-center leading-none rounded-full" style={{ width: '69%' }}>69%</div>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ))}

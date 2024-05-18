@@ -158,7 +158,7 @@ function MainDesign(props) {
                         fill="#90A4AE"
                     />
                 </svg>
-                <a href="#allJobs" className="flex items-center text-black">
+                <a href="#jobDiv" className="flex items-center text-black">
                     Job Seekers
                 </a>
             </Typography>
@@ -181,8 +181,8 @@ function MainDesign(props) {
                         fill="#90A4AE"
                     />
                 </svg>
-                <a href="#" className="flex items-center text-black">
-                    Candidate
+                <a href="http://localhost:3000/admin" className="flex items-center text-black">
+                    Post a Job
                 </a>
             </Typography>
             <Typography
@@ -244,7 +244,7 @@ function MainDesign(props) {
                             Upload Resume
                         </Button>
 
-                        <DarkModeToggle />
+                        {/* <DarkModeToggle /> */}
                     </div>
                     <IconButton
                         variant="text"
