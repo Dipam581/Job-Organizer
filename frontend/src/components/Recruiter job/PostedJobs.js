@@ -12,7 +12,7 @@ function PostedJobs(props) {
     const [filterJobType, setfilterJobType] = useState([]);
     const [checkedFilters, setCheckedFilters] = useState({});
     const jobSkill = ["python", "java", "django", "react", "node", "docker", "aws", "llm", "spring boot", "javascript", "restfull api", "html"]
-    console.log("posted jobs", props.postedJob);
+    //console.log("posted jobs", props.postedJob);
 
 
 
@@ -24,12 +24,12 @@ function PostedJobs(props) {
     );
 
     const fetchData = async () => {
-        console.log("data fetch started...")
+        //console.log("data fetch started...")
         const response = await fetch('http://localhost:8080/fetchData', {
             method: "GET",
         })
         const data = await response.json();
-        console.log("called db data", data)
+        //console.log("called db data", data)
 
         for (let key in data) {
             let obj = {

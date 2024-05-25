@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
-import ResumeBasedJobs from './Recruiter job/ResumeBasedJobs';
+// import ResumeBasedJobs from './Recruiter job/ResumeBasedJobs';
+import MatchedJobs from './Resume Based Jobs/MatchedJobs';
 
 function ResumeUpload({resumeClick}) {
     const [progress, setProgress] = useState(0);
+    const [showMatchedJob, setShowMatchedJob] = useState(false);
     const [fileName, setFileName] = useState("");
     const [divFlag, setDivFlag] = useState("hidden");
     const [flag, setFlag] = useState(true);
@@ -33,6 +35,7 @@ function ResumeUpload({resumeClick}) {
             console.log(responseData);
             setData(responseData.resume_details);
             setFlag(false);
+            setShowMatchedJob(true);
             //fetchData()
         } catch (error) {
             console.error('Error:', error);
@@ -73,7 +76,7 @@ function ResumeUpload({resumeClick}) {
 
     //Fetch resume informations from backend
     const [resumeData, setResumeData] = useState([])
-    console.log("From HelloWorld.js comp:");
+    //console.log("From HelloWorld.js comp:");
     const fetchData = async () => {
 
         try {
@@ -95,7 +98,8 @@ function ResumeUpload({resumeClick}) {
 
     return (
         <>
-            {resume_Data && Object.values(resume_Data).length > 0 && <ResumeBasedJobs responseData={resume_Data} />}
+            {showMatchedJob && <MatchedJobs resume_Data={resume_Data} />}
+            {/* {resume_Data && Object.values(resume_Data).length > 0 && <ResumeBasedJobs responseData={resume_Data} />} */}
             <div className="grid sm:grid-cols-2 gap-12 p-4 absolute mt-24" style={{ "z-index": "2", "width": "65rem", "margin-left": "20rem" }}>
                 <div for="uploadFile1"
                     className="bg-green-400 text-center px-4 rounded w-full h-80 flex flex-col items-center justify-center border-2 border-gray-400 border-dashed font-[sans-serif] top-0 transition-transform duration-1000 transform">

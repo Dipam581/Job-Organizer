@@ -15,7 +15,7 @@ function Home(props) {
     const [location, setLocation] = useState({});
 
 
-    console.log("from main-", props)
+    //console.log("from main-", props)
     useEffect(() => {
         if (props.data.jobs && props.data.jobs.length > 0) { // Check if jobsData is not empty
             setJobsData(props.data.jobs);

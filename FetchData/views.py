@@ -601,7 +601,7 @@ def basicdetails(lines,text):
     dictionary['degrees']=degrees
     
     def extract_skills(lines):
-        skill=['python', 'java', 'javascript', 'c#', 'R', 'sql', 'ruby', 'swift', 'typescript', 'kotlin', 'php', 'react', 'node.js', 
+        skill=['python', 'java', 'javascript', 'c#', 'R', 'sql', 'ruby', 'swift', 'typescript', 'kotlin', 'php', 'React.js', 'node.js', 
                'angular', 'vue.js', '.net', 'spring', 'django', 'flask', 'express', 'laravel', 'docker', 'kubernetes', 'aws', 'azure', 
                 'google cloud', 'jenkins', 'git', 'jira', 'salesforce', 'heroku', 'postgresql', 'mongodb', 'mysql', 'oracle', 'redis', 
                 'cassandra', 'elasticsearch', 'firebase', 'gile methodologies', 'devops', 'continuous integration/continuous deployment (ci/cd)', 

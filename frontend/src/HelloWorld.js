@@ -6,7 +6,7 @@ import Home from './Home'
 function App() {
 
   const [data,setData] = useState([])
-  console.log("From HelloWorld.js comp:");
+  //console.log("From HelloWorld.js comp:");
 
   useEffect(()=>{
     async function fetchData() {
