@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 import { GrPowerReset } from "react-icons/gr";
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import './styles.css';
 
 function MatchedJobs(props) {
     const [resumeData, setResumeData] = useState([]);
@@ -27,9 +28,9 @@ function MatchedJobs(props) {
         <>
             <div id="matchJob" className="mb-8">
                 <div className='mb-4'>
-                    <span className=' font-serif font-bold text-xl'>Welcome </span><span className=' font-serif font-bold text-yellow-400 text-3xl'>{props.employee.name}</span>
+                    <span className=' font-serif font-bold text-4xl'>Welcome </span><span className="blink text-5xl font-serif font-black" style={{ color: 'blue'}}>{props.employee.name}</span>
 
-                    <p></p>
+                    <p className='mt-4 mb-4 font-serif text-2xl text-yellow-400'>The Jobs matched with your Skills is/are :</p>
                 </div>
                 {resumeData_ && resumeData_.map((job, index) => (
                     <div key={index} className="grid grid-cols-4 gap-4 mb-8 border-2 rounded-lg border-blue-600">
@@ -45,7 +46,6 @@ function MatchedJobs(props) {
                         }}>
 
                         </div>
-
                         <div className="col-span-2 border-0">
                             <div className='text-2xl font-medium mr-16 mt-6 font-serif'>{job.desg} </div>
                             <div className='text-xl font-medium mr-16 mt-2 font-serif text-gray-500'>{job.company} </div>
@@ -65,6 +65,7 @@ function MatchedJobs(props) {
                             </div>
                         </div>
                         <div className="col-span-1 border-0 flex flex-col items-center">
+
                             <a href={job.link} target='blank'>
                                 <button type="submit" className='cursor-pointer border-2 p-2 mt-11 w-40 rounded-xl bg-cyan-500 text-white font-semibold text-lg hover:bg-green-500 hover:text-black'>Apply</button>
                             </a>

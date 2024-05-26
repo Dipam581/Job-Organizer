@@ -188,7 +188,7 @@ function MainDesign(props) {
                     Post a Job
                 </a>
             </Typography>
-            <Typography
+            {/* <Typography
                 as="li"
                 variant="small"
                 color="blue-gray"
@@ -211,7 +211,7 @@ function MainDesign(props) {
                 <a href="#" className="flex items-center text-black">
                     Contact
                 </a>
-            </Typography>
+            </Typography> */}
 
         </ul>
     );
