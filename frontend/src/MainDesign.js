@@ -34,6 +34,7 @@ function MainDesign(props) {
     const [filteredJobs, setFilteredJobs] = useState([]);
     const [loading, setLoading] = React.useState(false);
     const [divFlag, setDivFlag] = useState("hidden");
+    const [oddFlag, setOddFlag] = useState("");
 
     const [tab, setTab] = useState("tab-1");
     const [visible, setVisible] = useState(false);
@@ -41,10 +42,12 @@ function MainDesign(props) {
     // upload Resume function
     function rusumeButton() {
         setDivFlag("");
+        // setOddFlag("hidden")
     };
     const resumeClick = () => {
         console.log("resume parsed");
-        setDivFlag("hidden");
+        // setDivFlag("hidden");
+        setOddFlag("hidden");
     };
 
     function tabChange(e) {
@@ -306,129 +309,102 @@ function MainDesign(props) {
                         <ResumeUpload resumeClick={resumeClick} />
                     </div>
 
-                    <div className="relative">
+                    <div className={`${oddFlag}`}>
                         <div className="relative">
-                            <img className="w-full shadow-xl" src="https://www.theforage.com/blog/wp-content/uploads/2022/09/tech-companies.jpg" alt="" />
-                            <div className="absolute top-48" style={{ "right": "26rem" }}>
-                                <DynamicJobFinder />
-                                <StarterComponent/>
-
-                                {/* <div className="grid grid-cols-1 gap-1 border-2 border-green-500 rounded-xl bg-white">
-                                    <div className="p-6">
-                                        <select id="companyDropdown" className="border-2 w-full text-left h-9 border-green-500" value={selectedCompany} onChange={handleCompanyChange("company")}>
-                                            <option className='text-center' value="" disabled selected>Company</option>
-                                            {compfilter && compfilter.length > 0 && compfilter.map((company, index) => (
-                                                <option key={index} value={company}>{company}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div className="p-6">
-                                        <select id="locationDropdown" className="border-2 w-full text-center h-9 border-green-500" value={selectedLocation} onChange={handleCompanyChange("location")}>
-                                            <option className='text-center' value="" disabled selected>Location</option>
-                                            {locfilter && locfilter.length > 0 && locfilter.map((location, index) => (
-                                                <option key={index} value={location}>{location}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                    <div className="p-6">
-                                        <input id="word" type="text" className="form-control border-2 border-green-500 w-full text-center h-9" placeholder="Keyword" value={selectedWord} onChange={handleCompanyChange("word")} />
-                                    </div>
-                                    <div className="p-6">
-                                        <h1 className="text-green-300 underline text-xl font-bold ml-12 cursor-pointer" style={{ "width": "55%", "height": "100%" }} onClick={searchJob}>Search</h1>
-                                    </div>
-                                </div> */}
+                            <div className="relative">
+                                <img className="w-full shadow-xl" src="https://www.theforage.com/blog/wp-content/uploads/2022/09/tech-companies.jpg" alt="" />
+                                <div className="absolute top-48" style={{ "right": "26rem" }}>
+                                    <DynamicJobFinder />
+                                    <StarterComponent />
+                                </div>
                             </div>
                         </div>
+
+                        <About />
+
+
+                        <div className='mt-32 mb-4'>
+                            <hl className="text-white text-lg p-2 border-2 rounded-sm bg-orange-500">Latest Job Post</hl>
+                            <br />
+                            <p className="mt-6 text-black text-3xl">Jobs You May Be Interested</p>
+                            <br />
+                            <p className=' font-sans mb-6'>Explore a world of opportunities with jobs tailored to your interests.
+                                Discover roles that align with your skills and aspirations, opening doors to new challenges and growth.
+                                From innovative startups to industry leaders, find your next career move among a curated selection of positions.
+                                Your next adventure awaits – dive in and unlock your potential today.
+                            </p>
+                        </div>
+
+
+                        <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1 mb-6" id="navbar-sticky">
+                            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                                <li>
+                                    <a id="tab-1" href="#toptab-1" className="block py-2 px-3 text-xl border-b-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page" onClick={tabChange}>Posted Jobs</a>
+                                </li>
+                                <li>
+                                    <a id="tab-2" href="#toptab-2" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Remote Job</a>
+                                </li>
+                                <li>
+                                    <a id="tab-3" href="#toptab-3" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Current Openings</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div id="spinner" className={`p-0 active mb-6 grid grid-cols-4 gap-4 ${borderClass}`}>
+                            <div className="p-6">
+                                <BounceLoader
+                                    color="rgba(76, 54, 214, 1)"
+                                    cssOverride={{}}
+                                    loading
+                                    size={120}
+                                    speedMultiplier={1}
+                                />
+                            </div>
+                            <div className="p-6">
+                                <BounceLoader
+                                    color="rgba(76, 54, 214, 1)"
+                                    cssOverride={{}}
+                                    loading
+                                    size={120}
+                                    speedMultiplier={1}
+                                />
+                            </div>
+                            <div className="p-6">
+                                <BounceLoader
+                                    color="rgba(76, 54, 214, 1)"
+                                    cssOverride={{}}
+                                    loading
+                                    size={120}
+                                    speedMultiplier={1}
+                                />
+                            </div>
+                            <div className="p-6">
+                                <BounceLoader
+                                    color="rgba(76, 54, 214, 1)"
+                                    cssOverride={{}}
+                                    loading
+                                    size={120}
+                                    speedMultiplier={1}
+                                />
+                            </div>
+                        </div>
+                        <div id="jobDiv" className=''>
+                            <div id='toptab-1' className={`${tab === "tab-1" ? "" : "hidden"}`}>
+                                {/* <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} /> */}
+                                <Tab2 />
+                            </div>
+                            <div id='toptab-2' className={`${tab === "tab-2" ? "" : "hidden"}`}>
+
+                                <Tab1 listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
+                            </div>
+                            <div id='toptab-3' className={`${tab === "tab-3" ? "" : "hidden"}`}>
+                                <Tab3 />
+                            </div>
+
+                        </div>
                     </div>
 
-                    <About />
 
-
-                    <div className='mt-32 mb-4'>
-                        <hl className="text-white text-lg p-2 border-2 rounded-sm bg-orange-500">Latest Job Post</hl>
-                        <br />
-                        <p className="mt-6 text-black text-3xl">Jobs You May Be Interested</p>
-                        <br />
-                        <p className=' font-sans mb-6'>Explore a world of opportunities with jobs tailored to your interests.
-                            Discover roles that align with your skills and aspirations, opening doors to new challenges and growth.
-                            From innovative startups to industry leaders, find your next career move among a curated selection of positions.
-                            Your next adventure awaits – dive in and unlock your potential today.
-                        </p>
-                    </div>
-
-
-                    <div className="items-center justify-center hidden w-full md:flex md:w-auto md:order-1 mb-6" id="navbar-sticky">
-                        <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
-                                <a id="tab-1" href="#toptab-1" className="block py-2 px-3 text-xl border-b-2 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page" onClick={tabChange}>Posted Jobs</a>
-                            </li>
-                            <li>
-                                <a id="tab-2" href="#toptab-2" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Remote Job</a>
-                            </li>
-                            <li>
-                                <a id="tab-3" href="#toptab-3" className="block py-2 px-3 text-xl border-b-2 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" onClick={tabChange}>Current Openings</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* <BounceLoader color="#36d7b7" /> */}
-                    <div id="spinner" className={`p-0 active mb-6 grid grid-cols-4 gap-4 ${borderClass}`}>
-                        <div className="p-6">
-                            <BounceLoader
-                                color="rgba(76, 54, 214, 1)"
-                                cssOverride={{}}
-                                loading
-                                size={120}
-                                speedMultiplier={1}
-                            />
-                        </div>
-                        <div className="p-6">
-                            <BounceLoader
-                                color="rgba(76, 54, 214, 1)"
-                                cssOverride={{}}
-                                loading
-                                size={120}
-                                speedMultiplier={1}
-                            />
-                        </div>
-                        <div className="p-6">
-                            <BounceLoader
-                                color="rgba(76, 54, 214, 1)"
-                                cssOverride={{}}
-                                loading
-                                size={120}
-                                speedMultiplier={1}
-                            />
-                        </div>
-                        <div className="p-6">
-                            <BounceLoader
-                                color="rgba(76, 54, 214, 1)"
-                                cssOverride={{}}
-                                loading
-                                size={120}
-                                speedMultiplier={1}
-                            />
-                        </div>
-                    </div>
-                    {/* From this */}
-                    <div id="jobDiv" className=''>
-                        <div id='toptab-1' className={`${tab === "tab-1" ? "" : "hidden"}`}>
-                            {/* <JobListings listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} /> */}
-                            <Tab2 />
-                        </div>
-                        <div id='toptab-2' className={`${tab === "tab-2" ? "" : "hidden"}`}>
-
-                            <Tab1 listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} />
-                        </div>
-                        <div id='toptab-3' className={`${tab === "tab-3" ? "" : "hidden"}`}>
-                            <Tab3 />
-                        </div>
-
-                    </div>
-
-                    {/* listedJobs={filteredJobs.length > 0 ? filteredJobs : fetchJobs} */}
-
-                    {/* Between this */}
                 </div>
             </div>
         </>

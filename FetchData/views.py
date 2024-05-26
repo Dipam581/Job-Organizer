@@ -578,7 +578,7 @@ def basicdetails(lines,text):
 
 
     word_tokens = nltk.word_tokenize(text) 
-    #print(word_tokens)
+    # print("------------> ",word_tokens)
 
     def extract_degrees(lines):
         degrees=['b.tech','ba','ma','xii','b.sc','m.sc','m.tech','mca','high','senior','x','bachelor','bachelors','master','masters','specialization','mba','msc','10+2']
@@ -596,18 +596,16 @@ def basicdetails(lines,text):
         if w.lower()=="education":
             degrees=extract_degrees(word_tokens)
             count_edu=len(degrees)
-            print(degrees)
+            # print(degrees)
 
     dictionary['degrees']=degrees
     
     def extract_skills(lines):
-        skill=['python', 'java', 'javascript', 'c#', 'R', 'sql', 'ruby', 'swift', 'typescript', 'kotlin', 'php', 'React.js', 'node.js', 
+        skill=['python', 'java', 'javascript', 'c#', 'R', 'sql', 'ruby', 'swift', 'typescript', 'kotlin', 'php', 'react.js', 'node.js', 
                'angular', 'vue.js', '.net', 'spring', 'django', 'flask', 'express', 'laravel', 'docker', 'kubernetes', 'aws', 'azure', 
                 'google cloud', 'jenkins', 'git', 'jira', 'salesforce', 'heroku', 'postgresql', 'mongodb', 'mysql', 'oracle', 'redis', 
-                'cassandra', 'elasticsearch', 'firebase', 'gile methodologies', 'devops', 'continuous integration/continuous deployment (ci/cd)', 
-                'test-driven development (tdd)', 'tensorflow', 'pytorch', 'keras', 'scikit-learn', 'xgboost', 'lightgbm', 'neural networks', 'deep learning', 
-                'supervised learning', 'unsupervised learning', 'natural language processing (nlp)', 'computer vision', 'reinforcement learning', 'pandas', 'numpy', 
-                'matplotlib', 'seaborn', 'hadoop', 'spark', 'bigquery', 'google ai platform', 'aws sagemaker', 'azure machine learning', 'mlflow', 'tensorboard', 'git', 'svn']
+                'cassandra', 'elasticsearch', 'firebase', 'agile methodologies', 'devops', 'continuous integration/continuous deployment (ci/cd)', 
+                'test-driven development (tdd)', 'tensorflow', 'pytorch', 'keras', 'scikit-learn', 'xgboost', 'lightgbm', 'neural networks', 'deep learning', 'supervised learning', 'unsupervised learning', 'natural language processing (nlp)', 'computer vision', 'reinforcement learning', 'pandas', 'numpy', 'matplotlib', 'seaborn', 'hadoop', 'spark', 'bigquery', 'google ai platform', 'aws sagemaker', 'azure machine learning', 'mlflow', 'tensorboard', 'git', 'svn', 'llms']
         in_skill=[]
         for w in lines:
             w=w.lower()
@@ -616,10 +614,9 @@ def basicdetails(lines,text):
         return in_skill
     skill=[]
     for w in word_tokens:
-        if w.lower()=="education":
-            skill=extract_skills(word_tokens)
-            #count_edu=len(skill)
-            print("------",skill)
+        # print("------------> ",w)
+        skill=extract_skills(word_tokens)
+        # print("------",skill)
 
     dictionary['skill']=skill
     

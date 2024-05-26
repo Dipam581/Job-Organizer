@@ -1,15 +1,17 @@
 import { React, useState, useEffect } from 'react';
 import axios from 'axios';
-// import ResumeBasedJobs from './Recruiter job/ResumeBasedJobs';
+import ResumeBasedJobs from './Recruiter job/ResumeBasedJobs';
 import MatchedJobs from './Resume Based Jobs/MatchedJobs';
 
-function ResumeUpload({resumeClick}) {
+function ResumeUpload({ resumeClick }) {
     const [progress, setProgress] = useState(0);
     const [showMatchedJob, setShowMatchedJob] = useState(false);
     const [fileName, setFileName] = useState("");
     const [divFlag, setDivFlag] = useState("hidden");
+    const [maindivFlag, setMainDivFlag] = useState("");
     const [flag, setFlag] = useState(true);
     const [resume_Data, setData] = useState([]);
+    const [employee, setEmployee] = useState({});
 
     //console.log("resume upload process called.");
 
@@ -33,7 +35,8 @@ function ResumeUpload({resumeClick}) {
             });
             var responseData = await response.json();
             console.log(responseData);
-            setData(responseData.resume_details);
+            fetchBackendDataToMatchJob(responseData.resume_details);
+            //setData(responseData.resume_details);
             setFlag(false);
             setShowMatchedJob(true);
             //fetchData()
@@ -47,6 +50,7 @@ function ResumeUpload({resumeClick}) {
         };
         setTimeout(() => {
             setDivFlag("hidden");
+            setMainDivFlag("hidden")
             setProgress(0);
             resumeClick();
         }, 3000);
@@ -75,32 +79,56 @@ function ResumeUpload({resumeClick}) {
     };
 
     //Fetch resume informations from backend
-    const [resumeData, setResumeData] = useState([])
+    //const [resumeData, setResumeData] = useState([])
     //console.log("From HelloWorld.js comp:");
-    const fetchData = async () => {
+    const [matchData, setMatchData] = useState({});
+    const fetchBackendDataToMatchJob = async (resumeData) => {
+        console.log("Data fetch started...");
+        const response = await fetch('http://localhost:8080/fetchData', {
+            method: "GET",
+        });
+        const fetchedData = await response.json();
+        console.log("Fetched jobs from backend in MatchedJobs.js", fetchedData);
 
-        try {
-            const response = await fetch('http://127.0.0.1:8000/fetch/api/data/send');
-            if (!response.ok) {
-                throw new Error("Not found your request")
-            }
-            const result = await response.json();
-            console.log(result)
-            sessionStorage.setItem('csrfToken', result.csrfToken);
-            setResumeData(result)
-        } catch (error) {
-            console.log("error in fetching data", error);
+        // Reset matched object
+        let matchedObjeect = {};
+
+        // Filter data- Start
+        let resumeSkill = new Set(resumeData.skill.map(skill => skill.trim().toLowerCase()));
+        resumeSkill = Array.from(resumeSkill);
+        let resumeName = resumeData.Name;
+        let resumeDegree = resumeData.degrees;
+        let resumeDegreeEmail = resumeData.Email;
+        
+        let obj = {
+            "name" : resumeName,
+            "degree" : resumeDegree,
+            "email" : resumeDegreeEmail,
         }
-    }
+        setEmployee(obj);
 
-
-
+        for (let key in fetchedData) {
+            let jobSkills = fetchedData[key].skill.split(",").map(skill => skill.trim().toLowerCase());
+            let counter = 0;
+            for (let sk of jobSkills) {
+                if (resumeSkill.includes(sk)) {
+                    counter++;
+                }
+                if (counter > 2) {
+                    const now = new Date();
+                    const timestamp = now.getTime();
+                    matchedObjeect[timestamp % 1000000] = fetchedData[key];
+                    break;
+                }
+            }
+        }
+        setMatchData(prevData => ({ ...prevData, ...matchedObjeect }));
+    };
 
     return (
         <>
-            {showMatchedJob && <MatchedJobs resume_Data={resume_Data} />}
-            {/* {resume_Data && Object.values(resume_Data).length > 0 && <ResumeBasedJobs responseData={resume_Data} />} */}
-            <div className="grid sm:grid-cols-2 gap-12 p-4 absolute mt-24" style={{ "z-index": "2", "width": "65rem", "margin-left": "20rem" }}>
+            {showMatchedJob && <MatchedJobs resume_Data={matchData} employee={employee} />}
+            <div className={`grid sm:grid-cols-2 gap-12 p-4 absolute mt-24 ${maindivFlag}`} style={{ "z-index": "2", "width": "65rem", "margin-left": "20rem" }}>
                 <div for="uploadFile1"
                     className="bg-green-400 text-center px-4 rounded w-full h-80 flex flex-col items-center justify-center border-2 border-gray-400 border-dashed font-[sans-serif] top-0 transition-transform duration-1000 transform">
                     <div className="py-6">
